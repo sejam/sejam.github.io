@@ -71,8 +71,8 @@
             gMyLyr.definitionExpression = "NODISCONCT = '5'";
         } else if (gPassedServiceType === 7) { // display GoS = 6
             gMyLyr.definitionExpression = "NODISCONCT = '6'";
-        } else { // default is to only display service locations with a set GoS
-            gMyLyr.definitionExpression = "NODISCONCT IN ('1', '2', '3', '4', '5', '6')";
+        } else {
+            gMyLyr.definitionExpression = "gen = 'Berlin'";
         }
     }
 
