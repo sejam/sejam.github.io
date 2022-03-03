@@ -69,7 +69,7 @@
         } else if (gPassedServiceType === 4) {
             gMyLyr.definitionExpression = "ags = '04'";
         } else if (gPassedServiceType === 5) {
-            gMyLyr.definitionExpression = "gen = "Nordrhein-Westfalen"";
+            gMyLyr.definitionExpression = "gen = 'Nordrhein-Westfalen'";
         } else if (gPassedServiceType === 6) {
             gMyLyr.definitionExpression = "ags = 'Hessen'";
         } else if (gPassedServiceType === 7) {
