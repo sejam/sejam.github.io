@@ -240,16 +240,16 @@
         onCustomWidgetBeforeUpdate(changedProperties)
         {
             this._props = { ...this._props, ...changedProperties };
-           // console.log(["Service Level",changedProperties["servicelevel"]]);
+           // console.log(["Bundesland",changedProperties["bundesland"]]);
 
         }
 
         onCustomWidgetAfterUpdate(changedProperties) 
         {
-            if ("servicelevel" in changedProperties) {
-                this.$servicelevel = changedProperties["servicelevel"];
+            if ("bundesland" in changedProperties) {
+                this.$bundesland = changedProperties["bundesland"];
             }
-            gPassedServiceType = this.$servicelevel; // place passed in value into global
+            gPassedServiceType = this.$bundesland; // place passed in value into global
 
             if ("portalurl" in changedProperties) {
                 this.$portalurl = changedProperties["portalurl"];
