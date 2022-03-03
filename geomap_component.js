@@ -61,19 +61,19 @@
         if (gPassedServiceType === 0) { // display all
             gMyLyr.definitionExpression = "1 = 1"
         } else if (gPassedServiceType === 1) {
-            gMyLyr.definitionExpression = "gen = '1'";
+            gMyLyr.definitionExpression = "ags = '1'";
         } else if (gPassedServiceType === 2) {
-            gMyLyr.definitionExpression = "gen = '1'";
+            gMyLyr.definitionExpression = "ags = '1'";
         } else if (gPassedServiceType === 3) {
-            gMyLyr.definitionExpression = "gen = '2'";
+            gMyLyr.definitionExpression = "ags = '2'";
         } else if (gPassedServiceType === 4) {
-            gMyLyr.definitionExpression = "gen = '3'";
+            gMyLyr.definitionExpression = "ags = '3'";
         } else if (gPassedServiceType === 5) {
-            gMyLyr.definitionExpression = "gen = '4'";
+            gMyLyr.definitionExpression = "ags = '4'";
         } else if (gPassedServiceType === 6) {
-            gMyLyr.definitionExpression = "gen = '5'";
+            gMyLyr.definitionExpression = "ags = '5'";
         } else if (gPassedServiceType === 7) {
-            gMyLyr.definitionExpression = "gen = '6'";
+            gMyLyr.definitionExpression = "ags = '6'";
         }
     }
 
