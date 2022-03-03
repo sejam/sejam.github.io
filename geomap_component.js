@@ -237,19 +237,19 @@
             return this._currentSelection;
         }
 
-        onCustomWidgetBeforeUpdate(changedProperties)
+       onCustomWidgetBeforeUpdate(changedProperties)
         {
             this._props = { ...this._props, ...changedProperties };
-           // console.log(["Bundesland",changedProperties["bundesland"]]);
+           // console.log(["Service Level",changedProperties["servicelevel"]]);
 
         }
 
         onCustomWidgetAfterUpdate(changedProperties) 
         {
-            if ("bundesland" in changedProperties) {
-                this.$bundesland = changedProperties["bundesland"];
+            if ("servicelevel" in changedProperties) {
+                this.$servicelevel = changedProperties["servicelevel"];
             }
-            gPassedServiceType = this.$bundesland; // place passed in value into global
+            gPassedServiceType = this.$servicelevel; // place passed in value into global
 
             if ("portalurl" in changedProperties) {
                 this.$portalurl = changedProperties["portalurl"];
