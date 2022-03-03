@@ -64,7 +64,7 @@
         } else if (gPassedServiceType === 3) { // display GoS = 2
             gMyLyr.definitionExpression = "abs = '02'";
         } else if (gPassedServiceType === 4) { // display GoS = 3
-            gMyLyr.definitionExpression = "gen = "Niedersachsen"";
+            gMyLyr.definitionExpression = "gen = 'Niedersachsen'";
         } else if (gPassedServiceType === 5) { // display GoS = 4
             gMyLyr.definitionExpression = "NODISCONCT = '4'";
         } else if (gPassedServiceType === 6) { // display GoS = 5
