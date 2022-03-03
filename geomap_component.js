@@ -57,31 +57,23 @@
     function processDefinitionQuery()
     {
         // values of passedServiceType
-        // 0, 1 - no service levels. Only show service locations without a guarantee of service (GoS)
-        //     Note that 0 is passed in when the widget is initialized and 1 on subsequent times
-        // 2 - return any service location with a GoS = 1
-        // 3 - GoS = 2
-        // 4 - GoS = 3
-        // 5 - GoS = 4
-        // 6 - GoS = 5
-        // 7 - GoS = 6
-        // 8 (default) - return all service levels
-        if (gPassedServiceType <= 1) { // display all service locations
+        // 0 default, sonst filtere nach bundesland
+        if (gPassedServiceType === 0) { // display all
             gMyLyr.definitionExpression = "1 = 1"
-        } else if (gPassedServiceType === 2) { // display GoS = 1
-            gMyLyr.definitionExpression = "NODISCONCT = '1'";
-        } else if (gPassedServiceType === 3) { // display GoS = 2
-            gMyLyr.definitionExpression = "NODISCONCT = '2'";
-        } else if (gPassedServiceType === 4) { // display GoS = 3
-            gMyLyr.definitionExpression = "NODISCONCT = '3'";
-        } else if (gPassedServiceType === 5) { // display GoS = 4
-            gMyLyr.definitionExpression = "NODISCONCT = '4'";
-        } else if (gPassedServiceType === 6) { // display GoS = 5
-            gMyLyr.definitionExpression = "NODISCONCT = '5'";
-        } else if (gPassedServiceType === 7) { // display GoS = 6
-            gMyLyr.definitionExpression = "NODISCONCT = '6'";
-        } else { // default is to only display service locations with a set GoS
-            gMyLyr.definitionExpression = "NODISCONCT IN ('1', '2', '3', '4', '5', '6')";
+        } else if (gPassedServiceType === 1) {
+            gMyLyr.definitionExpression = "gen = '1'";
+        } else if (gPassedServiceType === 2) {
+            gMyLyr.definitionExpression = "gen = '1'";
+        } else if (gPassedServiceType === 3) {
+            gMyLyr.definitionExpression = "gen = '2'";
+        } else if (gPassedServiceType === 4) {
+            gMyLyr.definitionExpression = "gen = '3'";
+        } else if (gPassedServiceType === 5) {
+            gMyLyr.definitionExpression = "gen = '4'";
+        } else if (gPassedServiceType === 6) {
+            gMyLyr.definitionExpression = "gen = '5'";
+        } else if (gPassedServiceType === 7) {
+            gMyLyr.definitionExpression = "gen = '6'";
         }
     }
 
