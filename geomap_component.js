@@ -60,11 +60,11 @@
         if (gPassedServiceType < 1) { // display all service locations
             gMyLyr.definitionExpression = "1 = 1"
         } else if (gPassedServiceType === 2) { // display GoS = 1
-            gMyLyr.definitionExpression = "ibz = 20";
+            gMyLyr.definitionExpression = "gen = 'Berlin'";
         } else if (gPassedServiceType === 3) { // display GoS = 2
-            gMyLyr.definitionExpression = "fk_s3 = 0";
+            gMyLyr.definitionExpression = "gen = 'Niedersachsen'";
         } else if (gPassedServiceType === 4) { // display GoS = 3
-            gMyLyr.definitionExpression = "kfl = 34112";
+            gMyLyr.definitionExpression = "gen = 'Sachsen'";
         } else if (gPassedServiceType === 5) { // display GoS = 4
             gMyLyr.definitionExpression = "NODISCONCT = '4'";
         } else if (gPassedServiceType === 6) { // display GoS = 5
