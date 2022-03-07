@@ -57,10 +57,10 @@
     function processDefinitionQuery()
     {
         // values of passedServiceType
-        if (gPassedServiceType < 1) { // display all service locations
+        if (gPassedServiceType === 0) { // display all service locations
             gMyLyr.definitionExpression = "1 = 1"
-        } else if (gPassedServiceType === 2) { // display GoS = 1
-            gMyLyr.definitionExpression = "title = 'Berlin'";
+        } else if (gPassedServiceType < 2) { // display GoS = 1
+            gMyLyr.definitionExpression = "OBJECTID = '1'";
         } else if (gPassedServiceType === 3) { // display GoS = 2
             gMyLyr.definitionExpression = "gen = 'Niedersachsen'";
         } else if (gPassedServiceType === 4) { // display GoS = 3
