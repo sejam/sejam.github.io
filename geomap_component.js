@@ -40,7 +40,7 @@
         // only execute when the sublayer is loaded. Note this is asynchronous
         // so it may be skipped over during execution and be executed after exiting this function
         svcLyr.when(function() {
-            gMyLyr = svcLyr.findSublayerById(16);    // store in global variable
+            gMyLyr = svcLyr.findSublayerById(2);    // store in global variable
             console.log("Sublayer loaded...");
             console.log( "Sublayer is");
             console.log( gMyLyr);
@@ -57,14 +57,16 @@
     function processDefinitionQuery()
     {
         // values of passedServiceType
-        if (gPassedServiceType === 0) { // display all service locations
+        if (gPassedServiceType < 1) { // display all service locations
             gMyLyr.definitionExpression = "1 = 1"
-        } else if (gPassedServiceType < 2) { // display GoS = 1
+        } else if (gPassedServiceType === 1) { // display GoS = 1
             gMyLyr.definitionExpression = "OBJECTID = '1'";
+        } else if (gPassedServiceType === 2) { // display GoS = 1
+            gMyLyr.definitionExpression = "OBJECTID = '2'";
         } else if (gPassedServiceType === 3) { // display GoS = 2
-            gMyLyr.definitionExpression = "gen = 'Niedersachsen'";
+            gMyLyr.definitionExpression = "OBJECTID = '3'";
         } else if (gPassedServiceType === 4) { // display GoS = 3
-            gMyLyr.definitionExpression = "gen = 'Sachsen'";
+            gMyLyr.definitionExpression = "OBJECTID = '1'";
         } else if (gPassedServiceType === 5) { // display GoS = 4
             gMyLyr.definitionExpression = "NODISCONCT = '4'";
         } else if (gPassedServiceType === 6) { // display GoS = 5
@@ -72,7 +74,7 @@
         } else if (gPassedServiceType === 7) { // display GoS = 6
             gMyLyr.definitionExpression = "NODISCONCT = '6'";
         } else {
-            gMyLyr.definitionExpression = "gen = 'Berlin'";
+            gMyLyr.definitionExpression = "OBJECTID = '2'";
         }
     }
 
