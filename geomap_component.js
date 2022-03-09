@@ -30,7 +30,7 @@
     //
     // A definition query filters what was first retrieved from the SPL feature service
     function applyDefinitionQuery() {
-        var svcLyr = gMyWebmap.findLayerById( 'LAN_ew_20_9780' ); 
+        var svcLyr = gMyWebmap.findLayerById( 'Verkehrsunfälle__2018_3432' ); 
         console.log( "Layer is");
         console.log( svcLyr);
 
