@@ -40,7 +40,7 @@
         // only execute when the sublayer is loaded. Note this is asynchronous
         // so it may be skipped over during execution and be executed after exiting this function
         svcLyr.when(function() {
-            gMyLyr = svcLyr.findLayerById(2);    // store in global variable
+            gMyLyr = svcLyr.findLayerById(3);    // store in global variable
             console.log("Sublayer loaded...");
             console.log( "Sublayer is");
             console.log( gMyLyr);
@@ -60,11 +60,11 @@
         if (gPassedServiceType < 1) { // display all service locations
             gMyLyr.definitionExpression = "1 = 1"
         } else if (gPassedServiceType === 1) { // display GoS = 1
-            gMyLyr.definitionExpression = "ISO2 = 'NL'";
+            gMyLyr.definitionExpression = "gen = 'Berlin'";
         } else if (gPassedServiceType === 2) { // display GoS = 1
-            gMyLyr.definitionExpression = "ISO2 = 'BE'";
+            gMyLyr.definitionExpression = "gen = 'Sachsen'";
         } else if (gPassedServiceType === 3) { // display GoS = 2
-            gMyLyr.definitionExpression = "ISO2 = 'DE'";
+            gMyLyr.definitionExpression = "gen = 'Hessen'";
         } else if (gPassedServiceType === 4) { // display GoS = 3
             gMyLyr.definitionExpression = "ISO3 = 'BEL'";
         } else if (gPassedServiceType === 5) { // display GoS = 4
