@@ -30,7 +30,7 @@
     //
     // A definition query filters what was first retrieved from the SPL feature service
     function applyDefinitionQuery() {
-        var svcLyr = gMyWebmap.findLayerById( 'Verkehrsunfälle__2018_3432' ); 
+        var svcLyr = gMyWebmap.findLayerById( '17f6e8bbc78-layer-16' ); 
         console.log( "Layer is");
         console.log( svcLyr);
 
@@ -58,23 +58,23 @@
     {
         // values of passedServiceType
         if (gPassedServiceType < 1) { // display all service locations
-            svcLyr.definitionExpression = "1 = 1"
+            gMyLyr.definitionExpression = "1 = 1"
         } else if (gPassedServiceType === 1) { // display GoS = 1
-            svcLyr.definitionExpression = "OBJECTID = '1'";
+            gMyLyr.definitionExpression = "OBJECTID = '1'";
         } else if (gPassedServiceType === 2) { // display GoS = 1
-            svcLyr.definitionExpression = "'OBJECTID' = '2'";
+            gMyLyr.definitionExpression = "'OBJECTID' = '2'";
         } else if (gPassedServiceType === 3) { // display GoS = 2
-            svcLyr.definitionExpression = "OBJECTID = '3'";
+            gMyLyr.definitionExpression = "OBJECTID = '3'";
         } else if (gPassedServiceType === 4) { // display GoS = 3
-            svcLyr.definitionExpression = "OBJECTID = '1'";
+            gMyLyr.definitionExpression = "OBJECTID = '1'";
         } else if (gPassedServiceType === 5) { // display GoS = 4
-            svcLyr.definitionExpression = "Bundesland = '01'";
+            gMyLyr.definitionExpression = "Bundesland = '01'";
         } else if (gPassedServiceType === 6) { // display GoS = 5
-            svcLyr.definitionExpression = "'Bundesland' = '02'";
+            gMyLyr.definitionExpression = "'Bundesland' = '02'";
         } else if (gPassedServiceType === 7) { // display GoS = 6
-            svcLyr.definitionExpression = "Kreis = '03'";
+            gMyLyr.definitionExpression = "Kreis = '03'";
         } else {
-            svcLyr.definitionExpression = "OBJECTID = '2'";
+            gMyLyr.definitionExpression = "OBJECTID = '2'";
         }
     }
 
