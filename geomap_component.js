@@ -30,7 +30,7 @@
     //
     // A definition query filters what was first retrieved from the SPL feature service
     function applyDefinitionQuery() {
-        var svcLyr = gMyWebmap.findLayerById( 'LAN_ew_20_9780' ); 
+        var svcLyr = gMyWebmap.findLayerById( '17f7439fe5f-layer-21' ); 
         console.log( "Layer is");
         console.log( svcLyr);
 
@@ -40,7 +40,7 @@
         // only execute when the sublayer is loaded. Note this is asynchronous
         // so it may be skipped over during execution and be executed after exiting this function
         svcLyr.when(function() {
-            gMyLyr = svcLyr.findSublayerById(15);    // store in global variable
+            gMyLyr = svcLyr.findSublayerById('17f743bbc22-layer-22');    // store in global variable
             console.log("Sublayer loaded...");
             console.log( "Sublayer is");
             console.log( gMyLyr);
@@ -60,17 +60,17 @@
         if (gPassedServiceType < 1) { // display all service locations
             gMyLyr.definitionExpression = "1 = 1"
         } else if (gPassedServiceType === 1) { // display GoS = 1
-            gMyLyr.definitionExpression = "ags = '01'";
+            gMyLyr.definitionExpression = "ISO2 = 'NL'";
         } else if (gPassedServiceType === 2) { // display GoS = 1
-            gMyLyr.definitionExpression = "gen = 'Berlin'";
+            gMyLyr.definitionExpression = "ISO2 = 'BE'";
         } else if (gPassedServiceType === 3) { // display GoS = 2
-            gMyLyr.definitionExpression = "ags = '03'";
+            gMyLyr.definitionExpression = "ISO2 = 'DE'";
         } else if (gPassedServiceType === 4) { // display GoS = 3
-            gMyLyr.definitionExpression = "gen = 'Sachsen'";
+            gMyLyr.definitionExpression = "ISO3 = 'BEL'";
         } else if (gPassedServiceType === 5) { // display GoS = 4
-            gMyLyr.definitionExpression = "bez = 'Land'";
+            gMyLyr.definitionExpression = "ISO3 = 'NLD'";
         } else if (gPassedServiceType === 6) { // display GoS = 5
-            gMyLyr.definitionExpression = "bez = 'Land'";
+            gMyLyr.definitionExpression = "ISO3 = 'DEU'";
         } else if (gPassedServiceType === 7) { // display GoS = 6
             gMyLyr.definitionExpression = "bez = 'Land'";
         } else {
