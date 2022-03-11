@@ -57,24 +57,10 @@
     function processDefinitionQuery()
     {
         // values of passedServiceType
-        if (gPassedServiceType < 1) { // display all service locations
+        if (gPassedServiceType === 0) { // default
             gMyLyr.definitionExpression = "1 = 1"
-        } else if (gPassedServiceType === 1) {
-            gMyLyr.definitionExpression = "ISO2 = 'DE'";
-        } else if (gPassedServiceType === 2) {
-            gMyLyr.definitionExpression = "ISO2 = 'BE'";
-        } else if (gPassedServiceType === 3) {
+        } else if (gPassedServiceType === 1) { //wenn NL ausgewählt
             gMyLyr.definitionExpression = "ISO2 = 'NL'";
-        } else if (gPassedServiceType === 4) {
-            gMyLyr.definitionExpression = "ISO2 = 'AT'";
-        } else if (gPassedServiceType === 5) {
-            gMyLyr.definitionExpression = "ISO3 = 'NLD'";
-        } else if (gPassedServiceType === 6) {
-            gMyLyr.definitionExpression = "ISO3 = 'NLD'";
-        } else if (gPassedServiceType === 7) {
-            gMyLyr.definitionExpression = "ISO3 = 'DEU'";
-        } else { // default is to only display service locations with a set GoS
-            gMyLyr.definitionExpression = "ISO3 = 'DEU'";
         }
     }
 
