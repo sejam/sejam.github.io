@@ -4,7 +4,8 @@
     var gPassedPortalURL; //ESRI Portal URL
     var gPassedAPIkey; //ESRI JS api key
     var gWebmapInstantiated = 0; // a global used in applying definition query
-    var gMyLyr; // for sublayer
+    var nl; // for sublayer
+    var de;
     var gMyWebmap; // needs to be global for async call to onCustomWidgetAfterUpdate()
 
     template.innerHTML = `
@@ -40,13 +41,14 @@
         // only execute when the sublayer is loaded. Note this is asynchronous
         // so it may be skipped over during execution and be executed after exiting this function
         svcLyr.when(function() {
-            gMyLyr = svcLyr.findLayerById('NLD_Boundaries_2021_8517');    // store in global variable
+            nl = svcLyr.findLayerById('NLD_Boundaries_2021_8517');    // store in global variable
+            de = svcLyr.findLayerById('17f743bbc22-layer-22');    // store in global variable
             console.log("Sublayer loaded...");
             console.log( "Sublayer is");
-            console.log( gMyLyr);
+            console.log( nl);
 
             // force sublayer visible
-            gMyLyr.visible = true;
+            nl.visible = true;
 
             // run the query
             processDefinitionQuery();
@@ -58,9 +60,11 @@
     {
         // values of passedServiceType
         if (gPassedServiceType === 0 || gPassedServiceType === 4) { // layer anzeigen
-            gMyLyr.definitionExpression = "1 = 1"
+            nl.definitionExpression = "1 = 1"
+            de.definitionExpression = "1 = 1"
         } else { // default - layer nicht anzeigen
-            gMyLyr.definitionExpression = null;
+            nl.definitionExpression = null;
+            de.definitionExpression = null;
         }
     }
 
