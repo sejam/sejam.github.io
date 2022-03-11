@@ -57,11 +57,9 @@
     function processDefinitionQuery()
     {
         // values of passedServiceType
-        if (gPassedServiceType === 0) { // display all service locations
+        if (gPassedServiceType === 0 || gPassedServiceType === 4) { // layer anzeigen
             gMyLyr.definitionExpression = "1 = 1"
-        } else if (gPassedServiceType === 4) {
-            gMyLyr.definitionExpression = "ISO2 = 'NL'";
-        } else { // default
+        } else { // default - layer nicht anzeigen
             gMyLyr.definitionExpression = null;
         }
     }
