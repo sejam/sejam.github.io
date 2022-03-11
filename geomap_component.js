@@ -63,8 +63,8 @@
             gMyLyr.definitionExpression = "ISO2 = 'DE'"; 
         } else if (gPassedServiceType === 4) {
             gMyLyr.definitionExpression = "ISO2 = 'NL'";
-        } else if (gPassedServiceType >= 5 && gPassedServiceType <= 11) {
-            gMyLyr.definitionExpression = "ISO2 = 'DE'"; 
+        //} else if (gPassedServiceType >= 5 && gPassedServiceType <= 11) {
+            //gMyLyr.definitionExpression = "ISO2 = 'DE'"; 
         } else { // default
             gMyLyr.definitionExpression = "ISO2 = 'DE'";
         }
