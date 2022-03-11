@@ -59,9 +59,13 @@
     function processDefinitionQuery()
     {
         // values of passedServiceType
-        if (gPassedServiceType === 0 || gPassedServiceType === 4) { // layer anzeigen
+        if (gPassedServiceType === 0) { // layer anzeigen
             nl.definitionExpression = "1 = 1"
             de.definitionExpression = "1 = 1"
+        } else if ( gPassedServiceType === 1) {
+            de.definitionExpression = "ISO2 = 'DE'";
+        } else if ( gPassedServiceType === 4) {
+            nl.definitionExpression = "ISO2 = 'NL'";
         } else { // default - layer nicht anzeigen
             nl.definitionExpression = null;
             de.definitionExpression = null;
