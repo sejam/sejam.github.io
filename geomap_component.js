@@ -59,7 +59,7 @@
         // values of passedServiceType
         if (gPassedServiceType === 0) { // default
             gMyLyr.definitionExpression = "1 = 1"
-        } else if (gPassedServiceType === 1) { //wenn NL ausgewählt
+        } else if (gPassedServiceType === 4) { //wenn NL ausgewählt
             gMyLyr.definitionExpression = "ISO2 = 'NL'";
         }
     }
