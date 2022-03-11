@@ -57,21 +57,23 @@
     function processDefinitionQuery()
     {
         // values of passedServiceType
-        if (gPassedServiceType <= 1) { // display all service locations
+        if (gPassedServiceType === 0) { // display all service locations
             gMyLyr.definitionExpression = "1 = 1"
-        } else if (gPassedServiceType === 2) { // display GoS = 1
+        } else if (gPassedServiceType === 1) {
             gMyLyr.definitionExpression = "ISO2 = 'DE'"; 
-        } else if (gPassedServiceType === 3) { // display GoS = 2
+        } else if (gPassedServiceType === 2) {
             gMyLyr.definitionExpression = "ISO2 = 'DE'"; 
-        } else if (gPassedServiceType === 4) { // display GoS = 3
+        } else if (gPassedServiceType === 3) {
+            gMyLyr.definitionExpression = "ISO2 = 'DE'"; 
+        } else if (gPassedServiceType === 4) {
             gMyLyr.definitionExpression = "ISO2 = 'NL'";
-        } else if (gPassedServiceType === 5) { // display GoS = 4
+        } else if (gPassedServiceType === 5) {
             gMyLyr.definitionExpression = "ISO2 = 'DE'"; 
-        } else if (gPassedServiceType === 6) { // display GoS = 5
+        } else if (gPassedServiceType === 6) {
             gMyLyr.definitionExpression = "ISO2 = 'DE'"; 
-        } else if (gPassedServiceType === 7) { // display GoS = 6
+        } else if (gPassedServiceType === 7) {
             gMyLyr.definitionExpression = "ISO2 = 'DE'"; 
-        } else { // default is to only display service locations with a set GoS
+        } else { // default
             gMyLyr.definitionExpression = "NODISCONCT IN ('1', '2', '3', '4', '5', '6')";
         }
     }
