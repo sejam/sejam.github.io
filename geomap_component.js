@@ -40,7 +40,7 @@
         // only execute when the sublayer is loaded. Note this is asynchronous
         // so it may be skipped over during execution and be executed after exiting this function
         svcLyr.when(function() {
-            gMyLyr = svcLyr.findSublayerById(2);    // store in global variable
+            gMyLyr = svcLyr.findLayerById('NLD_Boundaries_2021_8517');    // store in global variable
             console.log("Sublayer loaded...");
             console.log( "Sublayer is");
             console.log( gMyLyr);
@@ -59,19 +59,19 @@
         // values of passedServiceType
         if (gPassedServiceType < 1) { // display all service locations
             gMyLyr.definitionExpression = "1 = 1"
-        } else if (gPassedServiceType === 1) { // display GoS = 1
+        } else if (gPassedServiceType === 1) {
             gMyLyr.definitionExpression = "ISO2 = 'DE'";
-        } else if (gPassedServiceType === 2) { // display GoS = 1
-            gMyLyr.definitionExpression = "ISO2 = BE";
-        } else if (gPassedServiceType === 3) { // display GoS = 2
+        } else if (gPassedServiceType === 2) {
+            gMyLyr.definitionExpression = "ISO2 = 'BE'";
+        } else if (gPassedServiceType === 3) {
             gMyLyr.definitionExpression = "ISO2 = 'NL'";
-        } else if (gPassedServiceType === 4) { // display GoS = 3
+        } else if (gPassedServiceType === 4) {
             gMyLyr.definitionExpression = "ISO2 = 'AT'";
-        } else if (gPassedServiceType === 5) { // display GoS = 4
+        } else if (gPassedServiceType === 5) {
             gMyLyr.definitionExpression = "ISO3 = 'NLD'";
-        } else if (gPassedServiceType === 6) { // display GoS = 5
-            gMyLyr.definitionExpression = "'ISO3' = 'NLD'";
-        } else if (gPassedServiceType === 7) { // display GoS = 6
+        } else if (gPassedServiceType === 6) {
+            gMyLyr.definitionExpression = "ISO3 = 'NLD'";
+        } else if (gPassedServiceType === 7) {
             gMyLyr.definitionExpression = "ISO3 = 'DEU'";
         } else { // default is to only display service locations with a set GoS
             gMyLyr.definitionExpression = "ISO3 = 'DEU'";
