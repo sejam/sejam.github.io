@@ -65,11 +65,13 @@
             de.definitionExpression = "1 = 1"
         } else if ( gPassedServiceType === 1) {
             de.definitionExpression = "ISO2 = 'DE'";
+            nl.definitionExpression = "ISO2 = 'DE'";
         } else if ( gPassedServiceType === 4) {
+            de.definitionExpression = "ISO2 = 'NL'";
             nl.definitionExpression = "ISO2 = 'NL'";
         } else { // default - layer nicht anzeigen
-            nl.definitionExpression = null;
             de.definitionExpression = null;
+            nl.definitionExpression = null;
         }
     }
 
