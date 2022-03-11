@@ -30,7 +30,7 @@
     //
     // A definition query filters what was first retrieved from the SPL feature service
     function applyDefinitionQuery() {
-        var svcLyr = gMyWebmap.findLayerById( '17f550e34be-layer-2' ); 
+        var svcLyr = gMyWebmap.findLayerById( '17f7439fe5f-layer-21' ); 
         console.log( "Layer is");
         console.log( svcLyr);
 
@@ -62,7 +62,7 @@
         } else if (gPassedServiceType === 1) { // display GoS = 1
             gMyLyr.definitionExpression = "ISO2 = 'DE'";
         } else if (gPassedServiceType === 2) { // display GoS = 1
-            gMyLyr.definitionExpression = "ISO2 = 'BE'";
+            gMyLyr.definitionExpression = "ISO2 = BE";
         } else if (gPassedServiceType === 3) { // display GoS = 2
             gMyLyr.definitionExpression = "ISO2 = 'NL'";
         } else if (gPassedServiceType === 4) { // display GoS = 3
