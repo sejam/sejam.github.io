@@ -4,7 +4,7 @@
     var gPassedPortalURL; //ESRI Portal URL
     var gPassedAPIkey; //ESRI JS api key
     var gWebmapInstantiated = 0; // a global used in applying definition query
-    var nl, de; // for sublayer
+    var de, at, ch, nl, be, lu, fr, it, cz, pl, dk; // for sublayer
     var gMyWebmap; // needs to be global for async call to onCustomWidgetAfterUpdate()
 
     template.innerHTML = `
@@ -40,16 +40,34 @@
         // only execute when the sublayer is loaded. Note this is asynchronous
         // so it may be skipped over during execution and be executed after exiting this function
         svcLyr.when(function() {
-            nl = svcLyr.findLayerById('NLD_Boundaries_2021_8517');    // store in global variable
-            de = svcLyr.findLayerById('17f743bbc22-layer-22');    // store in global variable
+            de = svcLyr.findLayerById('17f743bbc22-layer-22');     // store in global variable
+            at = svcLyr.findLayerById('17f790abd6c-layer-19');
+            ch = svcLyr.findLayerById('17f79b0788c-layer-26');
+            nl = svcLyr.findLayerById('NLD_Boundaries_2021_8517');
+            be = svcLyr.findLayerById('BEL_Boundaries_2021_2105');
+            lu = svcLyr.findLayerById('17f792683b7-layer-24');
+            fr = svcLyr.findLayerById('17f79274a21-layer-25');
+            it = svcLyr.findLayerById('17f79b4857f-layer-29');
+            cz = svcLyr.findLayerById('17f79b208ba-layer-27');
+            pl = svcLyr.findLayerById('17f79b3e2a7-layer-28');
+            dk = svcLyr.findLayerById('17f79b4f273-layer-30');
             console.log("Sublayer loaded...");
             console.log( "Sublayer is");
             console.log( nl);
 
             // force sublayer visible
-            nl.visible = true;
             de.visible = true;
-
+            at.visible = true;
+            ch.visible = true;
+            nl.visible = true;
+            be.visible = true;
+            lu.visible = true;
+            fr.visible = true;
+            it.visible = true;
+            cz.visible = true;
+            pl.visible = true;
+            dk.visible = true;
+            
             // run the query
             processDefinitionQuery();
         });
@@ -60,17 +78,53 @@
     {
         // values of passedServiceType
         if (gPassedServiceType === 0) { // layer anzeigen
-            nl.definitionExpression = "1 = 1"
             de.definitionExpression = "1 = 1"
+            at.definitionExpression = "1 = 1"
+            ch.definitionExpression = "1 = 1"
+            nl.definitionExpression = "1 = 1"
+            be.definitionExpression = "1 = 1"
+            lu.definitionExpression = "1 = 1"
+            fr.definitionExpression = "1 = 1"
+            it.definitionExpression = "1 = 1"
+            cz.definitionExpression = "1 = 1"
+            pl.definitionExpression = "1 = 1"
+            dk.definitionExpression = "1 = 1"
         } else if ( gPassedServiceType === 1) {
             de.definitionExpression = "ISO2 = 'DE'";
+            at.definitionExpression = "ISO2 = 'DE'";
+            ch.definitionExpression = "ISO2 = 'DE'";
             nl.definitionExpression = "ISO2 = 'DE'";
+            be.definitionExpression = "ISO2 = 'DE'";
+            lu.definitionExpression = "ISO2 = 'DE'";
+            fr.definitionExpression = "ISO2 = 'DE'";
+            it.definitionExpression = "ISO2 = 'DE'";
+            cz.definitionExpression = "ISO2 = 'DE'";
+            pl.definitionExpression = "ISO2 = 'DE'";
+            dk.definitionExpression = "ISO2 = 'DE'";
         } else if ( gPassedServiceType === 4) {
             de.definitionExpression = "ISO2 = 'NL'";
+            at.definitionExpression = "ISO2 = 'NL'";
+            ch.definitionExpression = "ISO2 = 'NL'";
             nl.definitionExpression = "ISO2 = 'NL'";
+            be.definitionExpression = "ISO2 = 'NL'";
+            lu.definitionExpression = "ISO2 = 'NL'";
+            fr.definitionExpression = "ISO2 = 'NL'";
+            it.definitionExpression = "ISO2 = 'NL'";
+            cz.definitionExpression = "ISO2 = 'NL'";
+            pl.definitionExpression = "ISO2 = 'NL'";
+            dk.definitionExpression = "ISO2 = 'NL'";
         } else { // default - layer nicht anzeigen
             de.definitionExpression = null;
+            at.definitionExpression = null;
+            ch.definitionExpression = null;
             nl.definitionExpression = null;
+            be.definitionExpression = null;
+            lu.definitionExpression = null;
+            fr.definitionExpression = null;
+            it.definitionExpression = null;
+            cz.definitionExpression = null;
+            pl.definitionExpression = null;
+            dk.definitionExpression = null;
         }
     }
 
