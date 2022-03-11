@@ -49,6 +49,7 @@
 
             // force sublayer visible
             nl.visible = true;
+            de.visible = true;
 
             // run the query
             processDefinitionQuery();
