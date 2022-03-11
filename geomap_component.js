@@ -59,12 +59,8 @@
         // values of passedServiceType
         if (gPassedServiceType === 0) { // display all service locations
             gMyLyr.definitionExpression = "1 = 1"
-        } else if (gPassedServiceType >= 1 && gPassedServiceType <= 3) {
-            gMyLyr.definitionExpression = "ISO2 = 'DE'"; 
         } else if (gPassedServiceType === 4) {
             gMyLyr.definitionExpression = "ISO2 = 'NL'";
-        //} else if (gPassedServiceType >= 5 && gPassedServiceType <= 11) {
-            //gMyLyr.definitionExpression = "ISO2 = 'DE'"; 
         } else { // default
             gMyLyr.definitionExpression = "ISO2 = 'DE'";
         }
