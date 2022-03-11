@@ -61,20 +61,12 @@
             gMyLyr.definitionExpression = "1 = 1"
         } else if (gPassedServiceType >= 1 && gPassedServiceType <= 3) {
             gMyLyr.definitionExpression = "ISO2 = 'DE'"; 
-        //} else if (gPassedServiceType === 2) {
-            //gMyLyr.definitionExpression = "ISO2 = 'DE'"; 
-        //} else if (gPassedServiceType === 3) {
-            //gMyLyr.definitionExpression = "ISO2 = 'DE'"; 
         } else if (gPassedServiceType === 4) {
             gMyLyr.definitionExpression = "ISO2 = 'NL'";
-        } else if (gPassedServiceType === 5) {
-            gMyLyr.definitionExpression = "ISO2 = 'DE'"; 
-        } else if (gPassedServiceType === 6) {
-            gMyLyr.definitionExpression = "ISO2 = 'DE'"; 
-        } else if (gPassedServiceType === 7) {
+        } else if (gPassedServiceType >= 5 && gPassedServiceType <= 11) {
             gMyLyr.definitionExpression = "ISO2 = 'DE'"; 
         } else { // default
-            gMyLyr.definitionExpression = "NODISCONCT IN ('1', '2', '3', '4', '5', '6')";
+            gMyLyr.definitionExpression = "ISO2 = 'DE'";
         }
     }
 
