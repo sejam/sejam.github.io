@@ -57,13 +57,14 @@
     function processDefinitionQuery()
     {
         // values of passedServiceType
-        if (gPassedServiceType === 0) { // default
+        if (gPassedServiceType === 0) { // alle länder
             gMyLyr.definitionExpression = "1 = 1"
+        } else if (gPassedServiceType < 4) { //wenn NL ausgewählt
+            gMyLyr.definitionExpression = "ISO2 = 'DE'";    
         } else if (gPassedServiceType === 4) { //wenn NL ausgewählt
             gMyLyr.definitionExpression = "ISO2 = 'NL'";
-        } else {
+        } else if (gPassedServiceType > 4) { //wenn NL ausgewählt
             gMyLyr.definitionExpression = "ISO2 = 'DE'";
-        }
     }
 
     class Map extends HTMLElement {
