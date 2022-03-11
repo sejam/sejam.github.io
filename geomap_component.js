@@ -30,7 +30,7 @@
     //
     // A definition query filters what was first retrieved from the SPL feature service
     function applyDefinitionQuery() {
-        var svcLyr = gMyWebmap.findLayerById( '17f7439fe5f-layer-21' ); 
+        var svcLyr = gMyWebmap.findLayerById( '17f743bbc22-layer-22' ); 
         console.log( "Layer is");
         console.log( svcLyr);
 
