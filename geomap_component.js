@@ -4,8 +4,7 @@
     var gPassedPortalURL; //ESRI Portal URL
     var gPassedAPIkey; //ESRI JS api key
     var gWebmapInstantiated = 0; // a global used in applying definition query
-    var nl; // for sublayer
-    var de;
+    var nl, de; // for sublayer
     var gMyWebmap; // needs to be global for async call to onCustomWidgetAfterUpdate()
 
     template.innerHTML = `
