@@ -51,11 +51,34 @@
             cz = svcLyr.findLayerById('17f79b208ba-layer-27');
             pl = svcLyr.findLayerById('17f79b3e2a7-layer-28');
             dk = svcLyr.findLayerById('17f79b4f273-layer-30');
-            console.log("Sublayer loaded...");
-            console.log( "Sublayer is");
-            console.log( nl);
+            
+            // layer nicht anzeigen
+            de.visible = false;
+            at.visible = false;
+            ch.visible = false;
+            nl.visible = false;
+            be.visible = false;
+            lu.visible = false;
+            fr.visible = false;
+            it.visible = false;
+            cz.visible = false;
+            pl.visible = false;
+            dk.visible = false;
+            
+            // run the query
+            processDefinitionQuery();
+        });
+    };
 
-            // force sublayer visible
+    // process the definition query on the passed in SPL feature sublayer
+    function processDefinitionQuery()
+    {
+        // values of passedServiceType
+        if ( gPassedServiceType === 1) {
+            de.visible = true;
+        } else if ( gPassedServiceType === 4) {
+            nl.visible = true;
+        } else { // default - layer nicht anzeigen
             de.visible = true;
             at.visible = true;
             ch.visible = true;
@@ -67,64 +90,6 @@
             cz.visible = true;
             pl.visible = true;
             dk.visible = true;
-            
-            // run the query
-            processDefinitionQuery();
-        });
-    };
-
-    // process the definition query on the passed in SPL feature sublayer
-    function processDefinitionQuery()
-    {
-        // values of passedServiceType
-        if (gPassedServiceType === 0) { // layer anzeigen
-            de.definitionExpression = "1 = 1"
-            at.definitionExpression = "1 = 1"
-            ch.definitionExpression = "1 = 1"
-            nl.definitionExpression = "1 = 1"
-            be.definitionExpression = "1 = 1"
-            lu.definitionExpression = "1 = 1"
-            fr.definitionExpression = "1 = 1"
-            it.definitionExpression = "1 = 1"
-            cz.definitionExpression = "1 = 1"
-            pl.definitionExpression = "1 = 1"
-            dk.definitionExpression = "1 = 1"
-        } else if ( gPassedServiceType === 1) {
-            de.definitionExpression = "ISO2 = 'DE'";
-            at.definitionExpression = "ISO2 = 'DE'";
-            ch.definitionExpression = "ISO2 = 'DE'";
-            nl.definitionExpression = "ISO2 = 'DE'";
-            be.definitionExpression = "ISO2 = 'DE'";
-            lu.definitionExpression = "ISO2 = 'DE'";
-            fr.definitionExpression = "ISO2 = 'DE'";
-            it.definitionExpression = "ISO2 = 'DE'";
-            cz.definitionExpression = "ISO2 = 'DE'";
-            pl.definitionExpression = "ISO2 = 'DE'";
-            dk.definitionExpression = "ISO2 = 'DE'";
-        } else if ( gPassedServiceType === 4) {
-            de.definitionExpression = "ISO2 = 'NL'";
-            at.definitionExpression = "ISO2 = 'NL'";
-            ch.definitionExpression = "ISO2 = 'NL'";
-            nl.definitionExpression = "ISO2 = 'NL'";
-            be.definitionExpression = "ISO2 = 'NL'";
-            lu.definitionExpression = "ISO2 = 'NL'";
-            fr.definitionExpression = "ISO2 = 'NL'";
-            it.definitionExpression = "ISO2 = 'NL'";
-            cz.definitionExpression = "ISO2 = 'NL'";
-            pl.definitionExpression = "ISO2 = 'NL'";
-            dk.definitionExpression = "ISO2 = 'NL'";
-        } else { // default - layer nicht anzeigen
-            de.definitionExpression = null;
-            at.definitionExpression = null;
-            ch.definitionExpression = null;
-            nl.definitionExpression = null;
-            be.definitionExpression = null;
-            lu.definitionExpression = null;
-            fr.definitionExpression = null;
-            it.definitionExpression = null;
-            cz.definitionExpression = null;
-            pl.definitionExpression = null;
-            dk.definitionExpression = null;
         }
     }
 
