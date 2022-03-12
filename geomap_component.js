@@ -37,10 +37,9 @@
         // make layers visible
         svcLyr.visible = true;
 
-        // only execute when the sublayer is loaded. Note this is asynchronous
-        // so it may be skipped over during execution and be executed after exiting this function
+        // sublayer in variable laden
         svcLyr.when(function() {
-            de = svcLyr.findLayerById('17f743bbc22-layer-22');     // store in global variable
+            de = svcLyr.findLayerById('17f743bbc22-layer-22');
             at = svcLyr.findLayerById('17f790abd6c-layer-19');
             ch = svcLyr.findLayerById('17f79b0788c-layer-26');
             nl = svcLyr.findLayerById('NLD_Boundaries_2021_8517');
@@ -69,15 +68,32 @@
             processDefinitionQuery();
         });
     };
-
-    // process the definition query on the passed in SPL feature sublayer
+    
     function processDefinitionQuery()
     {
-        // values of passedServiceType
+        // layer anzeigen
         if ( gPassedServiceType === 1) {
             de.visible = true;
+        } else if ( gPassedServiceType === 2) {
+            at.visible = true;
+        } else if ( gPassedServiceType === 3) {
+            ch.visible = true;
         } else if ( gPassedServiceType === 4) {
             nl.visible = true;
+        } else if ( gPassedServiceType === 5) {
+            be.visible = true;
+        } else if ( gPassedServiceType === 6) {
+            lu.visible = true;
+        } else if ( gPassedServiceType === 7) {
+            fr.visible = true;
+        } else if ( gPassedServiceType === 8) {
+            it.visible = true;
+        } else if ( gPassedServiceType === 9) {
+            cz.visible = true;
+        } else if ( gPassedServiceType === 10) {
+            pl.visible = true;
+        } else if ( gPassedServiceType === 11) {
+            dk.visible = true;
         } else { // default - layer nicht anzeigen
             de.visible = true;
             at.visible = true;
