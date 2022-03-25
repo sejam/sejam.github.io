@@ -22,7 +22,7 @@
         }
         </style>
         <div id='mapview'></div>
-         <div id='timeSlider'></div>
+        <div id='timeSlider'></div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
@@ -160,11 +160,11 @@
                     map: webmap
                 });
 
-                time slider widget initialization
+                // time slider widget initialization
                 const timeSlider = new TimeSlider({
                     container: "timeSlider",
                     view: view
-                );
+                });
         
                 // set on click for directions
                 view.on("click", addStop);
