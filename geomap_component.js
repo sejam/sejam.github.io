@@ -161,9 +161,9 @@
                 });
 
                 // time slider widget initialization
-                const timeSlider = new TimeSlider({
-                    container: "timeSlider",
-                    view: view
+                //const timeSlider = new TimeSlider({
+                //    container: "timeSlider",
+                //    view: view
                 });
         
                 // set on click for directions
