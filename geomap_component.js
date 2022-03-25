@@ -168,6 +168,17 @@
         
                 // set on click for directions
                 view.on("click", addStop);
+                
+                view.on("click", function (evt) {
+                    view.forEachLayerAtPixel(evt.pixel, function(layer) {
+                        console.log(evt.pixel);
+                        console.log(layer);
+                        var id = layer.get('id');
+                        console.log(id);
+                        var title = layer.get('title');
+                        console.log(title);
+                    });
+                });
         
                 function addGraphic(type, point) {
                     var graphic = new Graphic({
