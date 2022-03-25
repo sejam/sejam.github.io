@@ -169,7 +169,7 @@
                 // set on click for directions
                 view.on("click", addStop);
                 
-                view.on("click", function (evt) {
+                view.on('singleclick', function (evt) {
                     view.forEachLayerAtPixel(evt.pixel, function(layer) {
                         console.log(evt.pixel);
                         console.log(layer);
