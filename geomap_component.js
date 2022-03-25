@@ -124,7 +124,7 @@
                 "esri/views/MapView",
                 "esri/widgets/BasemapToggle",
                 "esri/layers/FeatureLayer",
-                // "esri/widgets/TimeSlider",
+                "esri/widgets/TimeSlider",
                 "esri/widgets/Expand",
                 "esri/tasks/RouteTask",
                 "esri/tasks/support/RouteParameters",
