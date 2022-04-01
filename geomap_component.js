@@ -107,6 +107,10 @@
             pl.visible = true;
             dk.visible = true;
         }
+        
+        if(de.visible === true){
+            gPassedServiceType = 1;  
+        }
     }
 
     class Map extends HTMLElement {
