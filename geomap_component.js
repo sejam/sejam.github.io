@@ -183,8 +183,16 @@
                         console.log(title);
                         de.visible = false;
                         gPassedServiceType = 1;
+                        console.log(gPassedServiceType);
                     });
                 });
+                
+                view.on("click", sl);
+                
+                function sl( event) { // no code here
+                    fr.visible = false;
+                    gPassedServiceType = 2;
+                };
         
                 function addGraphic(type, point) {
                     var graphic = new Graphic({
