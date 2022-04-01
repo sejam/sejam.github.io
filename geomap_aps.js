@@ -103,6 +103,10 @@
             
         } 
         
+        get sevicelevel() {
+            return this.getValue("servicelevel");
+            
+        }        
 
         getValue(id) {
             return this._shadowRoot.getElementById(id).value;
@@ -116,6 +120,7 @@
             return [
                 "apikey",
                 "portalurl"
+                "servicelevel"
             ];
         }
 
