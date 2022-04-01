@@ -106,7 +106,11 @@
         get sevicelevel() {
             return this.getValue("servicelevel");
             
-        }        
+        } 
+        set portalurl(value) {
+            this.setValue("servicelevel", value);
+         
+        } 
 
         getValue(id) {
             return this._shadowRoot.getElementById(id).value;
