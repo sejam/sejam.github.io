@@ -108,9 +108,9 @@
             dk.visible = true;
         }
         
-        if(de.visible === true){
-            gPassedServiceType = 1;  
-        }
+        //if(de.visible === true){
+           // gPassedServiceType = 1;  
+        //}
     }
 
     class Map extends HTMLElement {
@@ -182,16 +182,25 @@
                         var title = layer.get('title');
                         console.log(title);
                         de.visible = false;
-                        gPassedServiceType = 1;
-                        console.log(gPassedServiceType);
+                        //gPassedServiceType = 1;
+                        //console.log(gPassedServiceType);
                     });
                 });
                 
-                view.on("click", sl);
+                view.on("click", layerclick);
                 
-                function sl( event) { // no code here
-                    fr.visible = false;
+                function layerclick( event) { // no code here
                     gPassedServiceType = 2;
+                    at.visible = false;
+                    ch.visible = false;
+                    nl.visible = false;
+                    be.visible = false;
+                    lu.visible = false;
+                    fr.visible = false;
+                    it.visible = false;
+                    cz.visible = false;
+                    pl.visible = false;
+                    dk.visible = false;
                 };
         
                 function addGraphic(type, point) {
