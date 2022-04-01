@@ -181,6 +181,7 @@
                         console.log(id);
                         var title = layer.get('title');
                         console.log(title);
+                        de.visible = false;
                         gPassedServiceType = 1;
                     });
                 });
