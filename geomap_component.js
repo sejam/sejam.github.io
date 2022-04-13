@@ -128,6 +128,7 @@
                 "esri/views/MapView",
                 "esri/widgets/BasemapToggle",
                 "esri/layers/FeatureLayer",
+                "esri/widgets/TimeSlider",
                 "esri/widgets/Expand",
                 "esri/tasks/RouteTask",
                 "esri/tasks/support/RouteParameters",
@@ -136,7 +137,7 @@
                 "esri/Graphic",
                 "esri/views/ui/UI",
                 "esri/views/ui/DefaultUI" 
-            ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, Expand, RouteTask, RouteParameters, FeatureSet, Sublayer, Graphic) {
+            ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, TimeSlider, Expand, RouteTask, RouteParameters, FeatureSet, Sublayer, Graphic) {
                 
                 // set portal and API Key
                 esriConfig.portalUrl = gPassedPortalURL
@@ -164,10 +165,10 @@
                 });
 
                 // time slider widget initialization
-/*                const timeSlider = new TimeSlider({
-                    container: "timeSlider",
+                const timeSlider = new TimeSlider({
+                   // container: "timeSlider",
                     view: view
-                });*/
+                });
         
                 // set on click for directions
                 view.on("click", addStop);
