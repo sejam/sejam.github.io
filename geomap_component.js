@@ -166,7 +166,7 @@
 
                 // time slider widget initialization
                 const timeSlider = new TimeSlider({
-                   // container: "timeSlider",
+                    container: "timeSlider",
                     view: view
                 });
         
