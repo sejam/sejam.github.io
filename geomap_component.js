@@ -22,7 +22,7 @@
         }*/
         </style>
         <div id='mapview'></div>
-        <div id='timeSlider'></div>
+    //  <div id='timeSlider'></div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
