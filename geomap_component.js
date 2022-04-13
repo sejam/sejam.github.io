@@ -14,15 +14,15 @@
             width: 100%;
             height: 100%;
         }
-     /*   #timeSlider {
+        #timeSlider {
             position: absolute;
             left: 5%;
             right: 15%;
             bottom: 20px;
-        }*/
+        }
         </style>
         <div id='mapview'></div>
-      //  <div id='timeSlider'></div>
+        <div id='timeSlider'></div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
