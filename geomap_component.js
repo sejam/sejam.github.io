@@ -187,7 +187,7 @@
                     });
                 });
                 
-                view.on("click", layerclick);
+/*                view.on("click", layerclick);
                 
                 function layerclick( event) { // no code here
                     gPassedServiceType = 2;
@@ -202,7 +202,7 @@
                     pl.visible = false;
                     dk.visible = false;
                 };
-        
+*/        
                 function addGraphic(type, point) {
                     var graphic = new Graphic({
                         symbol: {
