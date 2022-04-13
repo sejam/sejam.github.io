@@ -14,7 +14,7 @@
             width: 100%;
             height: 100%;
         }
-        #timeSlider {
+       /* #timeSlider {
             position: absolute;
             left: 5%;
             right: 15%;
