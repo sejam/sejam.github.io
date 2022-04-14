@@ -30,7 +30,7 @@
     //
     // A definition query filters what was first retrieved from the SPL feature service
     function applyDefinitionQuery() {
-        var svcLyr = gMyWebmap.findLayerById( 'NapervilleElectric_MIL1_6627' ); 
+        var svcLyr = gMyWebmap.findLayerById( '17f7439fe5f-layer-21' ); 
         console.log( "Layer is");
         console.log( svcLyr);
 
@@ -47,6 +47,32 @@
 
             // force sublayer visible
             gMyLyr.visible = true;
+            
+            svcLyr.when(function() {
+            de = svcLyr.findLayerById('17f743bbc22-layer-22');
+            at = svcLyr.findLayerById('17f790abd6c-layer-19');
+            ch = svcLyr.findLayerById('17f79b0788c-layer-26');
+            nl = svcLyr.findLayerById('NLD_Boundaries_2021_8517');
+            be = svcLyr.findLayerById('BEL_Boundaries_2021_2105');
+            lu = svcLyr.findLayerById('17f792683b7-layer-24');
+            fr = svcLyr.findLayerById('17f79274a21-layer-25');
+            it = svcLyr.findLayerById('17f79b4857f-layer-29');
+            cz = svcLyr.findLayerById('17f79b208ba-layer-27');
+            pl = svcLyr.findLayerById('17f79b3e2a7-layer-28');
+            dk = svcLyr.findLayerById('17f79b4f273-layer-30');
+            
+            // layer nicht anzeigen
+            de.visible = false;
+            at.visible = false;
+            ch.visible = false;
+            nl.visible = false;
+            be.visible = false;
+            lu.visible = false;
+            fr.visible = false;
+            it.visible = false;
+            cz.visible = false;
+            pl.visible = false;
+            dk.visible = false;
 
             // run the query
             processDefinitionQuery();
@@ -56,32 +82,41 @@
     // process the definition query on the passed in SPL feature sublayer
     function processDefinitionQuery()
     {
-        // values of passedServiceType
-        // 0, 1 - no service levels. Only show service locations without a guarantee of service (GoS)
-        //     Note that 0 is passed in when the widget is initialized and 1 on subsequent times
-        // 2 - return any service location with a GoS = 1
-        // 3 - GoS = 2
-        // 4 - GoS = 3
-        // 5 - GoS = 4
-        // 6 - GoS = 5
-        // 7 - GoS = 6
-        // 8 (default) - return all service levels
-        if (gPassedServiceType <= 1) { // display all service locations
-            gMyLyr.definitionExpression = "1 = 1"
-        } else if (gPassedServiceType === 2) { // display GoS = 1
-            gMyLyr.definitionExpression = "NODISCONCT = '1'";
-        } else if (gPassedServiceType === 3) { // display GoS = 2
-            gMyLyr.definitionExpression = "NODISCONCT = '2'";
-        } else if (gPassedServiceType === 4) { // display GoS = 3
-            gMyLyr.definitionExpression = "NODISCONCT = '3'";
-        } else if (gPassedServiceType === 5) { // display GoS = 4
-            gMyLyr.definitionExpression = "NODISCONCT = '4'";
-        } else if (gPassedServiceType === 6) { // display GoS = 5
-            gMyLyr.definitionExpression = "NODISCONCT = '5'";
-        } else if (gPassedServiceType === 7) { // display GoS = 6
-            gMyLyr.definitionExpression = "NODISCONCT = '6'";
-        } else { // default is to only display service locations with a set GoS
-            gMyLyr.definitionExpression = "NODISCONCT IN ('1', '2', '3', '4', '5', '6')";
+        // layer anzeigen
+        if ( gPassedServiceType === 1) {
+            de.visible = true;
+        } else if ( gPassedServiceType === 2) {
+            at.visible = true;
+        } else if ( gPassedServiceType === 3) {
+            ch.visible = true;
+        } else if ( gPassedServiceType === 4) {
+            nl.visible = true;
+        } else if ( gPassedServiceType === 5) {
+            be.visible = true;
+        } else if ( gPassedServiceType === 6) {
+            lu.visible = true;
+        } else if ( gPassedServiceType === 7) {
+            fr.visible = true;
+        } else if ( gPassedServiceType === 8) {
+            it.visible = true;
+        } else if ( gPassedServiceType === 9) {
+            cz.visible = true;
+        } else if ( gPassedServiceType === 10) {
+            pl.visible = true;
+        } else if ( gPassedServiceType === 11) {
+            dk.visible = true;
+        } else { // default - layer nicht anzeigen
+            de.visible = true;
+            at.visible = true;
+            ch.visible = true;
+            nl.visible = true;
+            be.visible = true;
+            lu.visible = true;
+            fr.visible = true;
+            it.visible = true;
+            cz.visible = true;
+            pl.visible = true;
+            dk.visible = true;
         }
     }
 
@@ -125,7 +160,7 @@
                 // replace the ID below with the ID to your web map
                 const webmap = new WebMap ({
                     portalItem: {
-                        id: "75c9b28832d54f64af949c318faba2ed"
+                        id: "d44520ce09c240ad959e702990c95748"
                     }
                 });
 
