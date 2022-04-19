@@ -27,6 +27,8 @@
         <div id="infoDiv" class="esri-widget">
         </div>
         <div id="legendDiv"></div>
+        <div id="infoDiv" class="esri-widget">
+            <div id="legendDiv"></div>
         </div>
     `;
     
