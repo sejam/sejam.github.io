@@ -44,19 +44,7 @@
             this._props = {};
             let that = this;
 
-            require([
-                "esri/config",
-                "esri/WebMap",
-                "esri/views/MapView",
-                "esri/layers/FeatureLayer",
-                "esri/widgets/Expand",
-                "esri/tasks/support/RouteParameters",
-                "esri/tasks/support/FeatureSet",
-                "esri/layers/support/Sublayer",
-                "esri/Graphic",
-                "esri/views/ui/UI",
-                "esri/views/ui/DefaultUI" 
-            ], function(esriConfig, WebMap, MapView, FeatureLayer, Expand,  RouteParameters, FeatureSet, Sublayer, Graphic) {
+            require(["esri/config", "esri/WebMap",  "esri/views/MapView"], function(esriConfig, WebMap, MapView) {
         
                 // set portal and API Key
                 esriConfig.portalUrl = gPassedPortalURL
