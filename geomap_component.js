@@ -8,7 +8,7 @@
     var gMyWebmap; // needs to be global for async call to onCustomWidgetAfterUpdate()
 
     template.innerHTML = `
-        <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/light/main.css">
+        <link rel="stylesheet"https://js.arcgis.com/4.23/esri/themes/dark/main.css">
         <style>
         #mapview {
             width: 100%;
