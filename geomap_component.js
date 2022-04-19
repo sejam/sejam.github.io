@@ -44,8 +44,8 @@
             this._props = {};
             let that = this;
 
-            require(["esri/config", "esri/WebMap", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/widgets/Legend"],
-                    function(esriConfig, WebMap, MapView, FeatureLayer, Legend) {
+            require(["esri/config", "esri/WebMap", "esri/views/MapView", "esri/widgets/Legend"],
+                    function(esriConfig, WebMap, MapView, Legend) {
                 
                 // set portal and API Key
                 esriConfig.portalUrl = gPassedPortalURL
@@ -64,7 +64,8 @@
 
                 const view = new MapView({
                     container: "mapview",
-                    map: webmap
+                    map: webmap,
+                    zoom: 9
                 });
         
                 view.when(function () {
@@ -74,13 +75,6 @@
                     // find the SPL sublayer so a query is issued
                     applyDefinitionQuery();
                 });
-
-                view.ui.add(
-                    new Legend({
-                        view: view
-                    }),
-                    "bottom-left"
-                );
                 
             }); // end of require()
         } // end of constructor()    
