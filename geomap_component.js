@@ -20,7 +20,10 @@
         }
         #legendDiv{
             width: 260px;
-        }
+        } 
+        #description{
+            padding: 10px 0 10px 0;
+      }
         </style>
         
         <div id='mapview'></div>
@@ -28,6 +31,9 @@
         </div>
         <div id="legendDiv"></div>
         <div id="infoDiv" class="esri-widget">
+            <div id="description">
+            Show power plants with at least
+            </div>
             <div id="legendDiv"></div>
         </div>
     `;
