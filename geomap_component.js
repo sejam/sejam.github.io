@@ -18,9 +18,6 @@
         padding: 10px;
         width: 275px;
         }
-        #sliderValue{
-            font-weight: bolder;
-        }
         #legendDiv{
             width: 260px;
         }
@@ -31,11 +28,7 @@
         <div id='mapview'></div>
         <div id="infoDiv" class="esri-widget">
             <div id="description">
-            Show power plants with at least
-            <span id="sliderValue">0</span> megawatts of capacity
-        </div>
-        <div id="sliderContainer">
-            <div id="sliderDiv"></div>
+            Legende:
         </div>
         <div id="legendDiv"></div>
         </div>
@@ -67,8 +60,8 @@
             this._props = {};
             let that = this;
 
-            require(["esri/config", "esri/WebMap", "esri/views/MapView", "esri/widgets/Legend", "esri/widgets/Slider", "esri/widgets/Expand"],
-                    function(esriConfig, WebMap, MapView, Legend, Slider, Expand) {
+            require(["esri/config", "esri/WebMap", "esri/views/MapView", "esri/widgets/Legend", "esri/widgets/Expand"],
+                    function(esriConfig, WebMap, MapView, Legend, Expand) {
                 
                 // set portal and API Key
                 esriConfig.portalUrl = gPassedPortalURL
@@ -112,30 +105,7 @@
                         expanded: true
                     }),"top-right"
                 );
-                
-                view.whenLayerView(layer).then((layerView) => {
-                    const field = "capacity_net_bnetza";
-
-                    const slider = new Slider({
-                        min: 0,
-                        max: 2000,
-                        values: [0],
-                        container: document.getElementById("sliderDiv"),
-                        visibleElements: {
-                            rangeLabels: true
-                        },
-                    precision: 0
-                    });
-                    slider.on(["thumb-change", "thumb-drag"], (event) => {
-                    sliderValue.innerText = event.value;
-                    layerView.filter = {
-                        where: field + " >= " + event.value
-                    };
-               });
-        });
-
-          const sliderValue = document.getElementById("sliderValue");
-                
+                 
             }); // end of require()
         } // end of constructor()    
 
