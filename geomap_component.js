@@ -48,7 +48,6 @@
                 "esri/config",
                 "esri/WebMap",
                 "esri/views/MapView",
-                "esri/widgets/BasemapToggle",
                 "esri/layers/FeatureLayer",
                 "esri/widgets/Expand",
                 "esri/tasks/RouteTask",
@@ -58,7 +57,7 @@
                 "esri/Graphic",
                 "esri/views/ui/UI",
                 "esri/views/ui/DefaultUI" 
-            ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, Expand, RouteTask, RouteParameters, FeatureSet, Sublayer, Graphic) {
+            ], function(esriConfig, WebMap, MapView, FeatureLayer, Expand, RouteTask, RouteParameters, FeatureSet, Sublayer, Graphic) {
         
                 // set portal and API Key
                 esriConfig.portalUrl = gPassedPortalURL
@@ -163,19 +162,6 @@
                 view.when(function () {
                     view.popup.autoOpenEnabled = true; //disable popups
                     gWebmapInstantiated = 1; // used in onCustomWidgetAfterUpdate
-        
-                    // Create the basemap toggle
-                    var basemapToggle = new BasemapToggle({
-                        view:view,
-                        nextBasemap: "satellite"
-                    });
-
-        
-                    // Add the toggle to the bottom-right of the view
-                    view.ui.add( basemapToggle, "bottom-right");
-        
-                    // should have been set in onCustomWidgetBeforeUpdate()
-                    console.log( gPassedServiceType);
 
                     // find the SPL sublayer so a query is issued
                     applyDefinitionQuery();
