@@ -14,15 +14,8 @@
             width: 100%;
             height: 100%;
         }
-        #timeSlider {
-            position: absolute;
-            left: 5%;
-            right: 15%;
-            bottom: 20px;
-        }
         </style>
         <div id='mapview'></div>
-        <div id='timeSlider'></div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
@@ -100,7 +93,6 @@
                 "esri/views/MapView",
                 "esri/widgets/BasemapToggle",
                 "esri/layers/FeatureLayer",
-                "esri/widgets/TimeSlider",
                 "esri/widgets/Expand",
                 "esri/tasks/RouteTask",
                 "esri/tasks/support/RouteParameters",
@@ -109,7 +101,7 @@
                 "esri/Graphic",
                 "esri/views/ui/UI",
                 "esri/views/ui/DefaultUI" 
-            ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, TimeSlider, Expand, RouteTask, RouteParameters, FeatureSet, Sublayer, Graphic) {
+            ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, Expand, RouteTask, RouteParameters, FeatureSet, Sublayer, Graphic) {
         
                 // set portal and API Key
                 esriConfig.portalUrl = gPassedPortalURL
@@ -134,12 +126,6 @@
                 const view = new MapView({
                     container: "mapview",
                     map: webmap
-                });
-
-                // time slider widget initialization
-                const timeSlider = new TimeSlider({
-                    container: "timeSlider",
-                    view: view
                 });
         
                 // set on click for directions
