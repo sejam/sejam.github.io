@@ -44,8 +44,9 @@
             this._props = {};
             let that = this;
 
-            require(["esri/config", "esri/WebMap",  "esri/views/MapView"], function(esriConfig, WebMap, MapView) {
-        
+            require(["esri/config", "esri/WebMap", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/widgets/Legend"],
+                    function(esriConfig, WebMap, MapView, FeatureLayer, Legend) {
+                
                 // set portal and API Key
                 esriConfig.portalUrl = gPassedPortalURL
 
@@ -74,6 +75,13 @@
                     applyDefinitionQuery();
                 });
 
+                view.ui.add(
+                    new Legend({
+                        view: view
+                    }),
+                    "bottom-left"
+                );
+                
             }); // end of require()
         } // end of constructor()    
 
