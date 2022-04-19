@@ -4,12 +4,12 @@
     tmpl.innerHTML = `
       <style>
           fieldset {
-              margin-bottom: 10px;
+              margin-bottom: 5px;
               border: 1px solid #afafaf;
               border-radius: 3px;
           }
           table {
-              width: 100%;
+              width: 50%;
           }
           input, textarea, select {
               font-family: "72",Arial,Helvetica,sans-serif;
