@@ -7,21 +7,28 @@
     var gMyLyr; // for sublayer
     var gMyWebmap; // needs to be global for async call to onCustomWidgetAfterUpdate()
 
-    template.innerHTML = `
-        <link rel="stylesheet"https://js.arcgis.com/4.23/esri/themes/dark/main.css">
+    //template/theme
+    template.innerHTML = `        
+        <link
+        rel="stylesheet"
+        href="https://js.arcgis.com/4.23/esri/themes/dark/main.css"
+        />
+
         <style>
+        html,
+        body,
         #mapview {
-            width: 100%;
+            padding: 0;
+            margin: 0;
             height: 100%;
         }
         </style>
-        <div id='mapview'></div>
+
+    <script src="https://js.arcgis.com/4.23/"></script>
+    <script>
     `;
     
-    // this function takes the passed in servicelevel and issues a definition query
-    // to filter service location geometries
-    //
-    // A definition query filters what was first retrieved from the SPL feature service
+    //layer angeben
     function applyDefinitionQuery() {
         var svcLyr = gMyWebmap.findLayerById( '180412e30b4-layer-4' ); 
 
@@ -46,7 +53,7 @@
             this.appendChild(template.content.cloneNode(true));
             this._props = {};
             let that = this;
-
+            
             require([
                 "esri/config",
                 "esri/WebMap",
@@ -54,25 +61,19 @@
                 "esri/widgets/BasemapToggle",
                 "esri/layers/FeatureLayer",
                 "esri/widgets/Expand",
-                "esri/tasks/RouteTask",
-                "esri/tasks/support/RouteParameters",
                 "esri/tasks/support/FeatureSet",
                 "esri/layers/support/Sublayer",
                 "esri/Graphic",
                 "esri/views/ui/UI",
-                "esri/views/ui/DefaultUI" 
-            ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, Expand, RouteTask, RouteParameters, FeatureSet, Sublayer, Graphic) {
+                "esri/views/ui/DefaultUI"
+                "esri/widgets/Search"
+            ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, Expand, FeatureSet, Sublayer, Graphic, Search) {
         
                 // set portal and API Key
                 esriConfig.portalUrl = gPassedPortalURL
 
                 //  set esri api Key 
                 esriConfig.apiKey = gPassedAPIkey
-        
-                // set routing service
-                var routeTask = new RouteTask({
-                    url: "https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World"
-                });
         
                 // replace the ID below with the ID to your web map
                 const webmap = new WebMap ({
@@ -86,6 +87,16 @@
                 const view = new MapView({
                     container: "mapview",
                     map: webmap
+                });
+                
+                const search = new Search({
+                view: view
+                });
+                
+                view.ui.add(search, "top-right");
+
+                view.when(() => {
+                    search.search("Berlin");
                 });
 
             }); // end of require()
