@@ -11,8 +11,8 @@
         <link rel="stylesheet" href="https://js.arcgis.com/4.23/esri/themes/light/main.css">
         <style>
         #mapview {
-            width: 100%;
-            height: 100%;
+            width: 70%;
+            height: 70%;
         }
         </style>
         <div id='mapview'></div>
