@@ -14,14 +14,18 @@
             width: 100%;
             height: 100%;
         }
+        #infoDiv {
+        padding: 10px;
+        width: 275px;
+        }
         #legendDiv{
             width: 260px;
         }
-        #description{
-            padding: 10px 0 10px 0;
         </style>
         
         <div id='mapview'></div>
+        <div id="infoDiv" class="esri-widget">
+        </div>
         <div id="legendDiv"></div>
         </div>
     `;
@@ -89,8 +93,10 @@
                     container: "legendDiv"
                 });
                 
+                const infoDiv = document.getElementById("infoDiv");
                 view.ui.add(new Expand({
                     view: view,
+                    content: infoDiv,
                     expandIconClass: "esri-icon-layer-list",
                     expanded: true
                 }),"top-right");
