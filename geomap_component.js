@@ -14,8 +14,12 @@
             width: 100%;
             height: 100%;
         }
+        #legendDiv{
+        width: 260px;
+        }
         </style>
         <div id='mapview'></div>
+        <div id="legendDiv"></div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
@@ -74,6 +78,11 @@
 
                     // find the SPL sublayer so a query is issued
                     applyDefinitionQuery();
+                });
+                
+                const legend = new Legend({
+                    view: view,
+                    container: "legendDiv"
                 });
                 
             }); // end of require()
