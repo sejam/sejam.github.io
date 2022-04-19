@@ -14,12 +14,31 @@
             width: 100%;
             height: 100%;
         }
-        #legendDiv{
-        width: 260px;
+        #infoDiv {
+        padding: 10px;
+        width: 275px;
         }
+        #sliderValue{
+            font-weight: bolder;
+        }
+        #legendDiv{
+            width: 260px;
+        }
+        #description{
+            padding: 10px 0 10px 0;
         </style>
+        
         <div id='mapview'></div>
+        <div id="infoDiv" class="esri-widget">
+            <div id="description">
+            Show power plants with at least
+            <span id="sliderValue">0</span> megawatts of capacity
+        </div>
+        <div id="sliderContainer">
+            <div id="sliderDiv"></div>
+        </div>
         <div id="legendDiv"></div>
+        </div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
@@ -48,8 +67,8 @@
             this._props = {};
             let that = this;
 
-            require(["esri/config", "esri/WebMap", "esri/views/MapView", "esri/widgets/Legend"],
-                    function(esriConfig, WebMap, MapView, Legend) {
+            require(["esri/config", "esri/WebMap", "esri/views/MapView", "esri/widgets/Legend", "esri/widgets/Slider", "esri/widgets/Expand"],
+                    function(esriConfig, WebMap, MapView, Legend, Slider, Expand) {
                 
                 // set portal and API Key
                 esriConfig.portalUrl = gPassedPortalURL
@@ -84,6 +103,38 @@
                     view: view,
                     container: "legendDiv"
                 });
+                
+                const infoDiv = document.getElementById("infoDiv");
+                    view.ui.add(new Expand({
+                        view: view,
+                        content: infoDiv,
+                        expandIconClass: "esri-icon-layer-list",
+                        expanded: true
+                    }),"top-right"
+                );
+                
+                view.whenLayerView(layer).then((layerView) => {
+                    const field = "capacity_net_bnetza";
+
+                    const slider = new Slider({
+                        min: 0,
+                        max: 2000,
+                        values: [0],
+                        container: document.getElementById("sliderDiv"),
+                        visibleElements: {
+                            rangeLabels: true
+                        },
+                    precision: 0
+                    });
+                    slider.on(["thumb-change", "thumb-drag"], (event) => {
+                    sliderValue.innerText = event.value;
+                    layerView.filter = {
+                        where: field + " >= " + event.value
+                    };
+               });
+        });
+
+          const sliderValue = document.getElementById("sliderValue");
                 
             }); // end of require()
         } // end of constructor()    
