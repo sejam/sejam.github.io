@@ -8,24 +8,15 @@
     var gMyWebmap; // needs to be global for async call to onCustomWidgetAfterUpdate()
 
     //template/theme
-    template.innerHTML = `        
-        <link
-        rel="stylesheet"
-        href="https://js.arcgis.com/4.23/esri/themes/dark/main.css"
-        />
-
+    template.innerHTML = `
+        <link rel="stylesheet"https://js.arcgis.com/4.23/esri/themes/dark/main.css">
         <style>
-        html,
-        body,
         #mapview {
-            padding: 0;
-            margin: 0;
+            width: 100%;
             height: 100%;
         }
         </style>
-
-    <script src="https://js.arcgis.com/4.23/"></script>
-    <script>
+        <div id='mapview'></div>
     `;
     
     //layer angeben
