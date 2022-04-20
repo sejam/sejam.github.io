@@ -15,8 +15,8 @@
             height: 100%;
         }
         #paneDiv {
-        padding: 10px;
-        max-width: 200px;
+        padding: 50px;
+        max-width: 150px;
         //background-color: rgba(255, 255, 255, 0.8);
         font-size: 1.1em;
         }
@@ -24,7 +24,6 @@
         </style>
         <div id='mapview'></div>
         <div id="paneDiv" class="esri-widget">
-            <p>Legende</p> 
         </div>
     `;
     
@@ -97,6 +96,7 @@
                         layerInfos: [
                         {
                             layer: featureLayer
+                            title: "Legende"
                         }
                         ]
                     });
