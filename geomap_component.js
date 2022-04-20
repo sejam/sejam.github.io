@@ -14,7 +14,7 @@
             width: 100%;
             height: 100%;
         }
-        #paneDiv {
+        #legendDiv {
         padding: 50px;
         max-width: 150px;
         //background-color: rgba(255, 255, 255, 0.8);
@@ -23,7 +23,7 @@
       }
         </style>
         <div id='mapview'></div>
-        <div id="paneDiv" class="esri-widget">
+        <div id="legendDiv" class="esri-widget">
         </div>
     `;
     
@@ -92,10 +92,10 @@
 
                     const legend = new Legend({
                         view: view,
-                        container: "paneDiv",
+                        container: "legendDiv",
                         layerInfos: [
                         {
-                            layer: featureLayer
+                            layer: featureLayer,
                             title: "Legende"
                         }
                         ]
