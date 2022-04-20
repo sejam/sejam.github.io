@@ -104,7 +104,8 @@
         set portalurl(value) {
             this.setValue("portalurl", value);
         
-            
+        }
+        
         get compurl() {
             return this.getValue("compurl");
         }
