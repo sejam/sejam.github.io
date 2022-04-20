@@ -19,7 +19,7 @@
         max-width: 170px;
         //background-color: rgba(255, 255, 255, 0.8);
         font-size: 1.1em;
-        lineHeight: 0.1;
+        lineHeight: 0;
         opacity: 0.9;
         }
       }
