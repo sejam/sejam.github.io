@@ -19,8 +19,8 @@
         max-width: 170px;
         //background-color: rgba(255, 255, 255, 0.8);
         font-size: 1.1em;
-        lineHeight: 0.5;
-        opacity: 0.7;
+        lineHeight: 0.2;
+        opacity: 0.9;
         }
       }
         </style>
