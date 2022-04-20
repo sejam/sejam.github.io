@@ -89,10 +89,13 @@
                     // get the first layer in the collection of operational layers in the WebMap
                     // when the resources in the MapView have loaded.
                     const featureLayer = webmap.layers.getItemAt(0);
+                    
+                    //transparente Legende
+                    const legend_transp = getElementById("legendDIV").style.opacity = "0.5";
 
                     const legend = new Legend({
                         view: view,
-                        container: "legendDiv",
+                        container: legend_transp,
                         layerInfos: [
                         {
                             layer: featureLayer,
