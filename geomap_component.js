@@ -93,6 +93,7 @@
 
                     const legend = new Legend({
                         view: view,
+                        container: "paneDiv",
                         layerInfos: [
                         {
                             layer: featureLayer,
@@ -102,14 +103,14 @@
                     });
 
                     // Add widget to the bottom right corner of the view
-                    view.ui.add("paneDiv", "bottom-left");
+                    view.ui.add(legend, "bottom-left");
                     
                     view.ui.add(
                         new Expand({
                             view: view,
                             content: legend,
                             expandIconClass: "esri-icon-expand",
-                            expanded: true
+                            expanded: false
                         }),
                         "top-right"
                     );
