@@ -21,6 +21,7 @@
         font-size: 1.1em;
         lineHeight: 0;
         opacity: 0.9;
+        boxWidth: 6;
         }
       }
         </style>
