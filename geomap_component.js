@@ -14,28 +14,10 @@
             width: 100%;
             height: 100%;
         }
-        #infoDiv {
-        padding: 10px;
-        width: 275px;
-        }
-        #legendDiv{
-            width: 260px;
-        } 
-        #description{
-            padding: 10px 0 10px 0;
       }
         </style>
         
         <div id='mapview'></div>
-        <div id="infoDiv" class="esri-widget">
-        </div>
-        <div id="legendDiv"></div>
-        <div id="infoDiv" class="esri-widget">
-            <div id="description">
-            Show power plants with at least
-            </div>
-            <div id="legendDiv"></div>
-        </div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
@@ -96,12 +78,12 @@
                     applyDefinitionQuery();
                 });
                 
-                view.ui.add(
-          new Legend({
+                view.when(() => {
+          const legend = new Legend({
             view: view
-          }),
-          "bottom-left"
-        );
+          });
+          view.ui.add(legend, "bottom-left");
+        });
                 
           };
                  
