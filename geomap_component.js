@@ -100,7 +100,8 @@
                         layerInfos: [
                         {
                             layer: featureLayer,
-                            title: "Legende"
+                            title: "Legende",
+                            lineHeight: 0.5;
                         }
                         ]
                     });
