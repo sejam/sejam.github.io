@@ -16,7 +16,7 @@
         }
         #legendDiv {
         //padding: 10px;
-        max-width: 150px;
+        max-width: 160px;
         //background-color: rgba(255, 255, 255, 0.8);
         font-size: 1.1em;
         }
