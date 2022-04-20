@@ -14,9 +14,18 @@
             width: 100%;
             height: 100%;
         }
+        #paneDiv {
+        padding: 10px;
+        max-width: 200px;
+        background-color: rgba(255, 255, 255, 0.8);
+        font-size: 1.1em;
+        }
       }
         </style>
         <div id='mapview'></div>
+        <div id="paneDiv" class="esri-widget">
+            <p>Legende</p> 
+        </div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
@@ -93,7 +102,7 @@
                     });
 
                     // Add widget to the bottom right corner of the view
-                    //view.ui.add(legend, "bottom-right");
+                    view.ui.add("paneDiv", "bottom-left");
                     
                     view.ui.add(
                         new Expand({
