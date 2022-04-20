@@ -99,7 +99,7 @@
                         new Expand({
                             view: view,
                             content: legend,
-                            expandIconClass: "esri-icon-layer-list",
+                            expandIconClass: "esri-icon-collapse",
                             expanded: true
                         }),
                         "top-right"
