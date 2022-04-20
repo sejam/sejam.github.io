@@ -14,10 +14,21 @@
             width: 100%;
             height: 100%;
         }
+        
+      #infoDiv {
+        padding: 10px;
+        width: 275px;
+      }
+      #legendDiv{
+        width: 260px;
+      }
       }
         </style>
         
         <div id='mapview'></div>
+        <div id="infoDiv" class="esri-widget">
+        <div id="legendDiv"></div>
+        </div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
@@ -96,11 +107,11 @@
                     // Add widget to the bottom right corner of the view
                     //view.ui.add(legend, "bottom-right");
                 //});
-                
+                const infoDiv = document.getElementById("infoDiv");
                 view.ui.add(
                     new Expand({
                         view: view,
-                        content: legend,
+                        content: infoDiv,
                         expandIconClass: "esri-icon-layer-list",
                         expanded: true
                     }),
