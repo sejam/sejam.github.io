@@ -84,8 +84,6 @@
           });
           view.ui.add(legend, "bottom-left");
         });
-                
-          };
                  
             }); // end of require()
         } // end of constructor()    
