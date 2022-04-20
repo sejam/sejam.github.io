@@ -34,8 +34,12 @@
               <td><input id="apikey" name="apikey" type="text"></td>
             </tr>
             <tr>
-              <td><label for="portalurl">URL:</label></td>
+              <td><label for="portalurl">Portal-URL:</label></td>
               <td><input id="portalurl" name="portalurl" type="text"></td>
+            </tr>
+            <tr>
+              <td><label for="compurl">Component-URL:</label></td>
+              <td><input id="compurl" name="compurl" type="text"></td>
             </tr>
             
           </table>
@@ -101,16 +105,14 @@
             this.setValue("portalurl", value);
         
             
-        } 
-        
-        /*get sevicelevel() {
-            return this.getValue("servicelevel");
+        get compurl() {
+            return this.getValue("compurl");
+        }
+        set compurl(value) {
+            this.setValue("compurl", value);
             
         } 
-        set portalurl(value) {
-            this.setValue("servicelevel", value);
-         
-        } */
+        
 
         getValue(id) {
             return this._shadowRoot.getElementById(id).value;
@@ -124,7 +126,7 @@
             return [
                 "apikey",
                 "portalurl"
-                "servicelevel"
+                "compurl"
             ];
         }
 
