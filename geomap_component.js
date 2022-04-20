@@ -96,18 +96,14 @@
                     applyDefinitionQuery();
                 });
                 
-                const legend = new Legend({
-                    view: view,
-                    container: "legendDiv"
-                });
+                view.ui.add(
+          new Legend({
+            view: view
+          }),
+          "bottom-left"
+        );
                 
-                const infoDiv = document.getElementById("infoDiv");
-                view.ui.add(new Expand({
-                    view: view,
-                    content: infoDiv,
-                    expandIconClass: "esri-icon-layer-list",
-                    expanded: true
-                }),"top-right");
+          };
                  
             }); // end of require()
         } // end of constructor()    
