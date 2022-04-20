@@ -94,8 +94,18 @@
                     });
 
                     // Add widget to the bottom right corner of the view
-                    view.ui.add(legend, "bottom-right");
-                });
+                    //view.ui.add(legend, "bottom-right");
+                //});
+                
+                view.ui.add(
+                    new Expand({
+                        view: view,
+                        content: legend,
+                        expandIconClass: "esri-icon-layer-list",
+                        expanded: true
+                    }),
+                    "top-right"
+                );
                  
             }); // end of require()
         } // end of constructor()    
