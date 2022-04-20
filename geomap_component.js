@@ -79,11 +79,23 @@
                 });
                 
                 view.when(() => {
-          const legend = new Legend({
-            view: view
-          });
-          view.ui.add(legend, "bottom-left");
-        });
+                    // get the first layer in the collection of operational layers in the WebMap
+                    // when the resources in the MapView have loaded.
+                    const featureLayer = webmap.layers.getItemAt(0);
+
+                    const legend = new Legend({
+                        view: view,
+                        layerInfos: [
+                        {
+                            layer: featureLayer,
+                            title: "Legende"
+                        }
+                        ]
+                    });
+
+                    // Add widget to the bottom right corner of the view
+                    view.ui.add(legend, "bottom-right");
+                });
                  
             }); // end of require()
         } // end of constructor()    
