@@ -17,7 +17,7 @@
         #paneDiv {
         padding: 10px;
         max-width: 200px;
-        background-color: rgba(255, 255, 255, 0.8);
+        //background-color: rgba(255, 255, 255, 0.8);
         font-size: 1.1em;
         }
       }
@@ -96,8 +96,7 @@
                         container: "paneDiv",
                         layerInfos: [
                         {
-                            layer: featureLayer,
-                            title: "Legende"
+                            layer: featureLayer
                         }
                         ]
                     });
@@ -105,15 +104,6 @@
                     // Add widget to the bottom right corner of the view
                     view.ui.add(legend, "bottom-left");
                     
-                    view.ui.add(
-                        new Expand({
-                            view: view,
-                            content: legend,
-                            expandIconClass: "esri-icon-expand",
-                            expanded: false
-                        }),
-                        "top-right"
-                    );
                 });
                  
             }); // end of require()
