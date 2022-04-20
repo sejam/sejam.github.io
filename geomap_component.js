@@ -19,7 +19,7 @@
         max-width: 170px;
         max-height: 200px;
         //background-color: rgba(255, 255, 255, 0.8);
-        font-size: 1.1em;
+        font-size: 2em;
         lineHeight: 0;
         opacity: 0.9;
         boxWidth: 6;
