@@ -17,6 +17,7 @@
         #legendDiv {
         //padding: 10px;
         max-width: 170px;
+        max-height: 200px;
         //background-color: rgba(255, 255, 255, 0.8);
         font-size: 1.1em;
         lineHeight: 0;
