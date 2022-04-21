@@ -14,20 +14,9 @@
             width: 100%;
             height: 100%;
         }
-        #legendDiv {
-        //padding: 10px;
-        max-width: 170px;
-        max-height: 200px;
-        //background-color: rgba(255, 255, 255, 0.8);
-        font-size: 1em;
-        lineHeight: 0;
-        opacity: 0.9;
-        }
       }
         </style>
         <div id='mapview'></div>
-        <div id="legendDiv" class="esri-widget">
-        </div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
@@ -35,7 +24,7 @@
     //
     // A definition query filters what was first retrieved from the SPL feature service
     function applyDefinitionQuery() {
-        var svcLyr = gMyWebmap.findLayerById( '180412e30b4-layer-4' ); 
+        var svcLyr = gMyWebmap.findLayerById( '1804b2c4eb4-layer-2' ); 
 
         // make layers visible
         svcLyr.visible = true; 
@@ -68,7 +57,7 @@
                 // replace the ID below with the ID to your web map
                 const webmap = new WebMap ({
                     portalItem: {
-                        id: "c28062a42dde47a6953e4f789a0e7eea"
+                        id: "6e7e81e4504444b6a62486de1cd8744e"
                     }
                 });
 
@@ -86,28 +75,6 @@
 
                     // find the SPL sublayer so a query is issued
                     applyDefinitionQuery();
-                });
-                
-                view.when(() => {
-                    // get the first layer in the collection of operational layers in the WebMap
-                    // when the resources in the MapView have loaded.
-                    const featureLayer = webmap.layers.getItemAt(0);
-
-                    const legend = new Legend({
-                        view: view,
-                        container: "legendDiv",
-                        layerInfos: [
-                        {
-                            layer: featureLayer,
-                            title: "Legende",
-                            lineHeight: 0.2
-                        }
-                        ]
-                    });
-
-                    // Add widget to the bottom right corner of the view
-                    view.ui.add(legend, "bottom-left");
-                    
                 });
                  
             }); // end of require()
