@@ -23,7 +23,6 @@
         lineHeight: 0;
         opacity: 0.9;
         }
-      }
         </style>
         <div id='mapview'></div>
         <div id="legendDiv" class="esri-widget">
