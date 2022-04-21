@@ -14,8 +14,21 @@
             width: 100%;
             height: 100%;
         }
+        #legendDiv {
+        //padding: 10px;
+        max-width: 170px;
+        max-height: 200px;
+        //background-color: rgba(255, 255, 255, 0.8);
+        font-size: 1em;
+        lineHeight: 0;
+        opacity: 0.9;
+        //boxWidth: 6;
+        }
+      }
         </style>
         <div id='mapview'></div>
+        <div id="legendDiv" class="esri-widget">
+        </div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
@@ -75,6 +88,28 @@
                     // find the SPL sublayer so a query is issued
                     applyDefinitionQuery();
                 });
+                
+                view.when(() => {
+                    // get the first layer in the collection of operational layers in the WebMap
+                    // when the resources in the MapView have loaded.
+                    const featureLayer = webmap.layers.getItemAt(0);
+
+                    const legend = new Legend({
+                        view: view,
+                        container: "legendDiv",
+                        layerInfos: [
+                        {
+                            layer: featureLayer,
+                            title: "Legende",
+                            lineHeight: 0.2
+                        }
+                        ]
+                    });
+
+                    // Add widget to the bottom right corner of the view
+                    view.ui.add(legend, "bottom-left");
+                    
+                });
                  
             }); // end of require()
         } // end of constructor()    
@@ -119,7 +154,7 @@
 
     let scriptSrc = "https://js.arcgis.com/4.18/"
     let onScriptLoaded = function() {
-        customElements.define("com-sap-custom-geomap", Map);
+        customElements.define("com-sap-custom-geomap-1", Map);
     }
 
     //SHARED FUNCTION: reuse between widgets
