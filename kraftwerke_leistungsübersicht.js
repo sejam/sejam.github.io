@@ -22,13 +22,10 @@
         font-size: 1em;
         lineHeight: 0;
         opacity: 0.9;
-        //boxWidth: 6;
         }
       }
         </style>
         <div id='mapview'></div>
-        <div id="legendDiv" class="esri-widget">
-        </div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
@@ -154,7 +151,7 @@
 
     let scriptSrc = "https://js.arcgis.com/4.18/"
     let onScriptLoaded = function() {
-        customElements.define("com-sap-custom-geomap", Map);
+        customElements.define("com-sap-custom-geomap-2", Map);
     }
 
     //SHARED FUNCTION: reuse between widgets
