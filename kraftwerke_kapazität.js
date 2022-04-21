@@ -22,7 +22,7 @@
         font-size: 1em;
         lineHeight: 0;
         opacity: 0.9;
-        boxWidth: 6;
+        //boxWidth: 6;
         }
       }
         </style>
@@ -101,8 +101,7 @@
                         {
                             layer: featureLayer,
                             title: "Legende",
-                            lineHeight: 0.2,
-                            boxWidth: 6
+                            lineHeight: 0.2
                         }
                         ]
                     });
