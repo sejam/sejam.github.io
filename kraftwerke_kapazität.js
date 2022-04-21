@@ -24,7 +24,6 @@
         opacity: 0.9;
         //boxWidth: 6;
         }
-      }
         </style>
         <div id='mapview'></div>
         <div id="legendDiv" class="esri-widget">
