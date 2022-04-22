@@ -16,13 +16,11 @@
         }
         #legendDiv {
         //padding: 10px;
-        max-width: 170px;
-        max-height: 200px;
-        //background-color: rgba(255, 255, 255, 0.8);
+        max-width: 200px;
+        max-height: 250px;
         font-size: 1em;
         lineHeight: 0;
         opacity: 0.9;
-        //boxWidth: 6;
         }
         </style>
         <div id='mapview'></div>
@@ -77,7 +75,7 @@
                 const view = new MapView({
                     container: "mapview",
                     map: webmap,
-                    zoom: 5
+                    zoom: 6
                 });
         
                 view.when(function () {
@@ -99,8 +97,7 @@
                         layerInfos: [
                         {
                             layer: featureLayer,
-                            title: "Legende",
-                            lineHeight: 0
+                            title: "Legende"
                         }
                         ]
                     });
