@@ -16,7 +16,7 @@
         }
         #legendDiv {
         max-width: 200px;
-        max-height: 390px;
+        max-height: 400px;
         font-size: 1em;
         lineHeight: 0;
         opacity: 0.8;
