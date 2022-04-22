@@ -15,12 +15,11 @@
             height: 100%;
         }
         #legendDiv {
-        //padding: 10px;
         max-width: 200px;
-        max-height: 250px;
+        max-height: 300px;
         font-size: 1em;
         lineHeight: 0;
-        opacity: 0.9;
+        opacity: 0.8;
         }
         </style>
         <div id='mapview'></div>
