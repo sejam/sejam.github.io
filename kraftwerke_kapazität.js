@@ -36,12 +36,32 @@
 
         // make layers visible
         svcLyr.visible = true; 
+        
+        // run the query
+        processDefinitionQuery();
     };
 
     // process the definition query on the passed in SPL feature sublayer
     function processDefinitionQuery()
     {
-        //welche layer angezeigt werden sollen
+        //welche layer angezeigt werden sollen        
+        if (gPassedServiceType <= 1) {
+            svcLyr.definitionExpression = "1 = 1"
+        } else if (gPassedServiceType === 2) {
+            svcLyr.definitionExpression = "Bundesland = 'Berlin'";
+        } else if (gPassedServiceType === 3) {
+            svcLyr.definitionExpression = "state = 'Berlin'";
+        } else if (gPassedServiceType === 4) {
+            svcLyr.definitionExpression = "Bundesland = 'Berlin'";
+        } else if (gPassedServiceType === 5) {
+            svcLyr.definitionExpression = "Bundesland = 'Berlin'";
+        } else if (gPassedServiceType === 6) {
+            svcLyr.definitionExpression = "Bundesland = 'Berlin'";
+        } else if (gPassedServiceType === 7) {
+            svcLyr.definitionExpression = "Bundesland = 'Berlin'";
+        } else {
+            svcLyr.definitionExpression = "Bundesland IN ('1', '2', '3', '4', '5', '6')";
+        }
     }
 
     class Map extends HTMLElement {
