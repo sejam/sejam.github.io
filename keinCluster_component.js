@@ -14,20 +14,8 @@
             width: 100%;
             height: 100%;
         }
-        #legendDiv {
-        //padding: 10px;
-        max-width: 170px;
-        max-height: 200px;
-        //background-color: rgba(255, 255, 255, 0.8);
-        font-size: 1em;
-        lineHeight: 0;
-        opacity: 0.9
-        }
-      }
         </style>
         <div id='mapview'></div>
-        <div id="legendDiv" class="esri-widget">
-        </div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
@@ -35,17 +23,11 @@
     //
     // A definition query filters what was first retrieved from the SPL feature service
     function applyDefinitionQuery() {
-        var svcLyr = gMyWebmap.findLayerById( '180412e30b4-layer-4' ); 
+        var svcLyr = gMyWebmap.findLayerById( '1808a4d63be-layer-2' ); 
 
         // make layers visible
         svcLyr.visible = true; 
     };
-
-    // process the definition query on the passed in SPL feature sublayer
-    function processDefinitionQuery()
-    {
-        //welche layer angezeigt werden sollen
-    }
 
     class Map extends HTMLElement {
         constructor() {
@@ -68,7 +50,7 @@
                 // replace the ID below with the ID to your web map
                 const webmap = new WebMap ({
                     portalItem: {
-                        id: "c28062a42dde47a6953e4f789a0e7eea"
+                        id: "d0d1305e34ef49bc9888f590758d5128"
                     }
                 });
 
@@ -77,39 +59,9 @@
                 const view = new MapView({
                     container: "mapview",
                     map: webmap,
-                    zoom: 5
-                });
-        
-                view.when(function () {
-                    view.popup.autoOpenEnabled = true; //disable popups
-                    gWebmapInstantiated = 1; // used in onCustomWidgetAfterUpdate
-
-                    // find the SPL sublayer so a query is issued
-                    applyDefinitionQuery();
+                    zoom: 7
                 });
                 
-                view.when(() => {
-                    // get the first layer in the collection of operational layers in the WebMap
-                    // when the resources in the MapView have loaded.
-                    const featureLayer = webmap.layers.getItemAt(0);
-
-                    const legend = new Legend({
-                        view: view,
-                        container: "legendDiv",
-                        layerInfos: [
-                        {
-                            layer: featureLayer,
-                            title: "Legende",
-                            lineHeight: 0.2
-                        }
-                        ]
-                    });
-
-                    // Add widget to the bottom right corner of the view
-                    view.ui.add(legend, "bottom-left");
-                    
-                });
-                 
             }); // end of require()
         } // end of constructor()    
 
@@ -153,7 +105,7 @@
 
     let scriptSrc = "https://js.arcgis.com/4.18/"
     let onScriptLoaded = function() {
-        customElements.define("com-sap-custom-geomap", Map);
+        customElements.define("com-sap-custom-geomap-1", Map);
     }
 
     //SHARED FUNCTION: reuse between widgets
