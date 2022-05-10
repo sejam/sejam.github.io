@@ -30,27 +30,12 @@
     //
     // A definition query filters what was first retrieved from the SPL feature service
     function applyDefinitionQuery() {
-        var svcLyr = gMyWebmap.findLayerById( '1808a4d63be-layer-2' ); 
+        var svcLyr = gMyWebmap.findLayerById( '1804b2c4eb4-layer-2' ); 
         console.log( "Layer is");
         console.log( svcLyr);
 
         // make layers visible
         svcLyr.visible = true;
-
-        // only execute when the sublayer is loaded. Note this is asynchronous
-        // so it may be skipped over during execution and be executed after exiting this function
-        svcLyr.when(function() {
-            gMyLyr = svcLyr.findSublayerById(6);    // store in global variable
-            console.log("Sublayer loaded...");
-            console.log( "Sublayer is");
-            console.log( gMyLyr);
-
-            // force sublayer visible
-            gMyLyr.visible = true;
-
-            // run the query
-            processDefinitionQuery();
-        });
     };
 
     // process the definition query on the passed in SPL feature sublayer
@@ -99,7 +84,7 @@
                 // replace the ID below with the ID to your web map
                 const webmap = new WebMap ({
                     portalItem: {
-                        id: "d0d1305e34ef49bc9888f590758d5128"
+                        id: "6e7e81e4504444b6a62486de1cd8744e"
                     }
                 });
 
