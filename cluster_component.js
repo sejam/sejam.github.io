@@ -8,21 +8,23 @@
     var gMyWebmap; // needs to be global for async call to onCustomWidgetAfterUpdate()
 
     template.innerHTML = `
-        <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/light/main.css">
+        <link rel="stylesheet" href="https://js.arcgis.com/4.23/esri/themes/light/main.css">
         <style>
         #mapview {
             width: 100%;
             height: 100%;
         }
-        #timeSlider {
-            position: absolute;
-            left: 5%;
-            right: 15%;
-            bottom: 20px;
+        #legendDiv {
+        max-width: 200px;
+        max-height: 390px;
+        font-size: 1em;
+        lineHeight: 0;
+        opacity: 0.8;
         }
         </style>
         <div id='mapview'></div>
-        <div id='timeSlider'></div>
+        <div id="legendDiv" class="esri-widget">
+        </div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
@@ -30,18 +32,36 @@
     //
     // A definition query filters what was first retrieved from the SPL feature service
     function applyDefinitionQuery() {
-        var svcLyr = gMyWebmap.findLayerById( '1804b2c4eb4-layer-2' ); 
-        console.log( "Layer is");
-        console.log( svcLyr);
+        var svcLyr = gMyWebmap.findLayerById( '180412e30b4-layer-4' ); 
 
         // make layers visible
-        svcLyr.visible = true;
+        svcLyr.visible = true; 
+        
+        // run the query
+        processDefinitionQuery();
     };
 
     // process the definition query on the passed in SPL feature sublayer
     function processDefinitionQuery()
     {
-        // values of passedServiceType
+        //welche layer angezeigt werden sollen        
+        if (gPassedServiceType <= 1) {
+            svcLyr.definitionExpression = "1 = 1"
+        } else if (gPassedServiceType === 2) {
+            svcLyr.definitionExpression = "Bundesland = 'Berlin'";
+        } else if (gPassedServiceType === 3) {
+            svcLyr.definitionExpression = "state = 'Berlin'";
+        } else if (gPassedServiceType === 4) {
+            svcLyr.definitionExpression = "Bundesland = 'Berlin'";
+        } else if (gPassedServiceType === 5) {
+            svcLyr.definitionExpression = "Bundesland = 'Berlin'";
+        } else if (gPassedServiceType === 6) {
+            svcLyr.definitionExpression = "Bundesland = 'Berlin'";
+        } else if (gPassedServiceType === 7) {
+            svcLyr.definitionExpression = "Bundesland = 'Berlin'";
+        } else {
+            svcLyr.definitionExpression = "Bundesland IN ('1', '2', '3', '4', '5', '6')";
+        }
     }
 
     class Map extends HTMLElement {
@@ -53,38 +73,19 @@
             this._props = {};
             let that = this;
 
-            require([
-                "esri/config",
-                "esri/WebMap",
-                "esri/views/MapView",
-                "esri/widgets/BasemapToggle",
-                "esri/layers/FeatureLayer",
-                "esri/widgets/TimeSlider",
-                "esri/widgets/Expand",
-                "esri/tasks/RouteTask",
-                "esri/tasks/support/RouteParameters",
-                "esri/tasks/support/FeatureSet",
-                "esri/layers/support/Sublayer",
-                "esri/Graphic",
-                "esri/views/ui/UI",
-                "esri/views/ui/DefaultUI" 
-            ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, TimeSlider, Expand, RouteTask, RouteParameters, FeatureSet, Sublayer, Graphic) {
-        
+            require(["esri/config", "esri/WebMap", "esri/views/MapView", "esri/widgets/Legend", "esri/widgets/Expand"],
+                    function(esriConfig, WebMap, MapView, Legend, Expand) {
+                
                 // set portal and API Key
                 esriConfig.portalUrl = gPassedPortalURL
 
                 //  set esri api Key 
                 esriConfig.apiKey = gPassedAPIkey
         
-                // set routing service
-                var routeTask = new RouteTask({
-                    url: "https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World"
-                });
-        
                 // replace the ID below with the ID to your web map
                 const webmap = new WebMap ({
                     portalItem: {
-                        id: "6e7e81e4504444b6a62486de1cd8744e"
+                        id: "c28062a42dde47a6953e4f789a0e7eea"
                     }
                 });
 
@@ -95,7 +96,7 @@
                     map: webmap,
                     zoom: 7
                 });
-
+        
                 view.when(function () {
                     view.popup.autoOpenEnabled = true; //disable popups
                     gWebmapInstantiated = 1; // used in onCustomWidgetAfterUpdate
@@ -103,7 +104,28 @@
                     // find the SPL sublayer so a query is issued
                     applyDefinitionQuery();
                 });
+                
+                view.when(() => {
+                    // get the first layer in the collection of operational layers in the WebMap
+                    // when the resources in the MapView have loaded.
+                    const featureLayer = webmap.layers.getItemAt(0);
 
+                    const legend = new Legend({
+                        view: view,
+                        container: "legendDiv",
+                        layerInfos: [
+                        {
+                            layer: featureLayer,
+                            title: "Legende"
+                        }
+                        ]
+                    });
+
+                    // Add widget to the bottom right corner of the view
+                    view.ui.add(legend, "bottom-left");
+                    
+                });
+                 
             }); // end of require()
         } // end of constructor()    
 
@@ -147,7 +169,7 @@
 
     let scriptSrc = "https://js.arcgis.com/4.18/"
     let onScriptLoaded = function() {
-        customElements.define("com-sap-custom-geomap", Map);
+        customElements.define("com-sap-custom-geomap-1", Map);
     }
 
     //SHARED FUNCTION: reuse between widgets
