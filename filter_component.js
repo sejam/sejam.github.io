@@ -24,9 +24,9 @@
         <div id='mapview'></div>
         <div id="info-div" class="esri-widget">
             Filter by type<br /><br />
-            <select id="layer-select">
-                <option value="">All</option>
-                <option value=" WHERE Bundesland = 'Sachsen'" selected>Sachsen</option>
+            <select id="Bundesland">
+                <option value=""selected>All</option>
+                <option value=" WHERE Bundesland = 'Sachsen'">Sachsen</option>
                 <option value=" WHERE state = 'Bayern'">Bayern</option>
                 <option value=" WHERE Energiequelle = 'Waste'">Energiequelle</option>
             </select>
