@@ -35,8 +35,6 @@
     // process the definition query on the passed in SPL feature sublayer
     function processDefinitionQuery()
     {
-        svcLyr.definitionExpression = "Bundesland = 'Sachsen'";
-        svcLyr.definitionExpression = "state = 'Hamburg'";
     }
 
     class Map extends HTMLElement {
