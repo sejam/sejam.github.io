@@ -8,14 +8,29 @@
     var gMyWebmap; // needs to be global for async call to onCustomWidgetAfterUpdate()
 
     template.innerHTML = `
-        <link rel="stylesheet" href="https://js.arcgis.com/4.23/esri/themes/light/main.css">
+        <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/light/main.css">
         <style>
         #mapview {
             width: 100%;
             height: 100%;
         }
+        #info-div {
+            background-color: white;
+            border-radius: 8px;
+            padding: 8px;
+            opacity: 0.92;
+        }
         </style>
         <div id='mapview'></div>
+        <div id="info-div" class="esri-widget">
+            Filter by type<br /><br />
+            <select id="layer-select">
+                <option value="">All</option>
+                <option value=" WHERE Bundesland = 'Sachsen'" selected>Sachsen</option>
+                <option value=" WHERE state = 'Bayern'">Bayern</option>
+                <option value=" WHERE Energiequelle = 'Waste'">Energiequelle</option>
+            </select>
+        </div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
@@ -26,8 +41,16 @@
         var svcLyr = gMyWebmap.findLayerById( '1808a4d63be-layer-2' ); 
 
         // make layers visible
-        svcLyr.visible = true; 
+        svcLyr.visible = true;
+
+        // run the query
+            processDefinitionQuery();
     };
+
+    // process the definition query on the passed in SPL feature sublayer
+    function processDefinitionQuery()
+    {
+    }
 
     class Map extends HTMLElement {
         constructor() {
@@ -38,14 +61,32 @@
             this._props = {};
             let that = this;
 
-            require(["esri/config", "esri/WebMap", "esri/views/MapView", "esri/widgets/Legend", "esri/widgets/Expand"],
-                    function(esriConfig, WebMap, MapView, Legend, Expand) {
-                
+            require([
+                "esri/config",
+                "esri/WebMap",
+                "esri/views/MapView",
+                "esri/widgets/BasemapToggle",
+                "esri/layers/FeatureLayer",
+                "esri/widgets/Expand",
+                "esri/tasks/RouteTask",
+                "esri/tasks/support/RouteParameters",
+                "esri/tasks/support/FeatureSet",
+                "esri/layers/support/Sublayer",
+                "esri/Graphic",
+                "esri/views/ui/UI",
+                "esri/views/ui/DefaultUI" 
+            ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, Expand, RouteTask, RouteParameters, FeatureSet, Sublayer, Graphic) {
+        
                 // set portal and API Key
                 esriConfig.portalUrl = gPassedPortalURL
 
                 //  set esri api Key 
                 esriConfig.apiKey = gPassedAPIkey
+        
+                // set routing service
+                var routeTask = new RouteTask({
+                    url: "https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World"
+                });
         
                 // replace the ID below with the ID to your web map
                 const webmap = new WebMap ({
@@ -59,9 +100,19 @@
                 const view = new MapView({
                     container: "mapview",
                     map: webmap,
-                    zoom: 7
+                    zoom: 9
                 });
                 
+                view.ui.add("info-div", "top-right");
+
+                view.when(function () {
+                    view.popup.autoOpenEnabled = true; //disable popups
+                    gWebmapInstantiated = 1; // used in onCustomWidgetAfterUpdate
+
+                    // find the SPL sublayer so a query is issued
+                    applyDefinitionQuery();
+                });
+
             }); // end of require()
         } // end of constructor()    
 
@@ -105,7 +156,7 @@
 
     let scriptSrc = "https://js.arcgis.com/4.18/"
     let onScriptLoaded = function() {
-        customElements.define("com-sap-custom-geomap-1", Map);
+        customElements.define("com-sap-custom-geomap", Map);
     }
 
     //SHARED FUNCTION: reuse between widgets
