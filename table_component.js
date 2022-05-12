@@ -75,8 +75,10 @@
                 "esri/layers/support/Sublayer",
                 "esri/Graphic",
                 "esri/views/ui/UI",
-                "esri/views/ui/DefaultUI" 
-            ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, Expand, RouteTask, RouteParameters, FeatureSet, Sublayer, Graphic) {
+                "esri/views/ui/DefaultUI",
+                "esri/core/reactiveUtils",
+                "esri/widgets/FeatureTable"
+            ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, Expand, RouteTask, RouteParameters, FeatureSet, Sublayer, Graphic, reactiveUtils, FeatureTable) {
         
                 // set portal and API Key
                 esriConfig.portalUrl = gPassedPortalURL
