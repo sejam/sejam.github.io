@@ -10,26 +10,12 @@
     template.innerHTML = `
         <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/light/main.css">
         <style>
-        html,
-        body {
-          height: 100%;
-          width: 100%;
-          margin: 0;
-          padding: 0;
-        }
-        #viewDiv {
-          height: 50%;
-          width: 100%;
-        }
-        .container {
-          height: 50%;
-          width: 100%;
+        #mapview {
+            width: 100%;
+            height: 100%;
         }
         </style>
-        <div id="viewDiv"></div>
-        <div class="container">
-          <div id="tableDiv"></div>
-        </div>
+        <div id='mapview'></div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
@@ -37,7 +23,7 @@
     //
     // A definition query filters what was first retrieved from the SPL feature service
     function applyDefinitionQuery() {
-        var svcLyr = gMyWebmap.findLayerById( '180b539cf17-layer-2' ); 
+        var svcLyr = gMyWebmap.findLayerById( '1808a4d63be-layer-2' ); 
 
         // make layers visible
         svcLyr.visible = true;
@@ -66,7 +52,6 @@
                 "esri/views/MapView",
                 "esri/widgets/BasemapToggle",
                 "esri/layers/FeatureLayer",
-                "esri/core/reactiveUtils",
                 "esri/widgets/Expand",
                 "esri/tasks/RouteTask",
                 "esri/tasks/support/RouteParameters",
@@ -74,10 +59,8 @@
                 "esri/layers/support/Sublayer",
                 "esri/Graphic",
                 "esri/views/ui/UI",
-                "esri/views/ui/DefaultUI",
-                "esri/widgets/FeatureTable
-            ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, reactiveUtils, Expand, RouteTask, RouteParameters, FeatureSet,
-                  Sublayer, Graphic, FeatureTable) {
+                "esri/views/ui/DefaultUI" 
+            ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, Expand, RouteTask, RouteParameters, FeatureSet, Sublayer, Graphic) {
         
                 // set portal and API Key
                 esriConfig.portalUrl = gPassedPortalURL
@@ -100,9 +83,9 @@
                 gMyWebmap = webmap;  // save to global variable
 
                 const view = new MapView({
-                    container: "viewDiv",
+                    container: "mapview",
                     map: webmap,
-                    zoom: 7
+                    zoom: 8
                 });
 
                 view.when(function () {
@@ -112,177 +95,82 @@
                     // find the SPL sublayer so a query is issued
                     applyDefinitionQuery();
                 });
-                
-                view.when(() => {
-                  const featureLayer = webmap.layers.getItemAt(0); //grabs the first layer in the map
-                  featureLayer.title = "Energiequellen Standorte";
 
-                // Create the feature table
-                const featureTable = new FeatureTable({
-                view: view, // required for feature highlight to work
-                layer: featureLayer,
-                visibleElements: {
-                  // autocast to VisibleElements
-                  menuItems: {
-                    clearSelection: true,
-                    refreshData: true,
-                    toggleColumns: true,
-                    selectedRecordsShowAllToggle: true,
-                    selectedRecordsShowSelectedToggle: true,
-                    zoomToSelection: false
-                  }
-                },
-                // autocast to FieldColumnConfigs
-                fieldConfigs: [
-                {
-                  name: "name_bnetza",
-                  label: "Leistung in MW",
-                  direction: "asc"
-                },
-                { 
-                  name: "energy_source",
-                  label: "Energiequelle"
-                },
-                {
-                  name: "state",
-                  label: "Bundesland"
-                 }
-                ],
-                container: document.getElementById("tableDiv")
-              });
-              
-              // Listen for when the view is updated. If so, pass the new view.extent into the table's filterGeometry
-              featureLayer.watch("loaded", () => {
-                reactiveUtils.when(
-                  () => view.updating === false,
-                  () => {
-                    // Get the new extent of view/map whenever map is updated.
-                    if (view.extent) {
-                      // Filter out and show only the visible features in the feature table
-                      featureTable.filterGeometry = view.extent;
+            }); // end of require()
+        } // end of constructor()    
 
-                      // Listen for the table's selection-change event
-                      featureTable.on("selection-change", (changes) => {
-                        console.log(changes);
-                    });
-                  }
-                }
-              );
-            });
+        getSelection() {
+            return this._currentSelection;
+        }
 
-            // Listen for the table's selection-change event
-            featureTable.on("selection-change", (changes) => {
-              // If the selection is removed, remove the feature from the array
-              changes.removed.forEach((item) => {
-                const data = features.find((data) => {
-                  return data.feature === item.feature;
-                });
-                if (data) {
-                  features.splice(features.indexOf(data), 1);
-                }
-              });
+        onCustomWidgetBeforeUpdate(changedProperties)
+        {
+            this._props = { ...this._props, ...changedProperties };
+           // console.log(["Service Level",changedProperties["servicelevel"]]);
 
-              // If the selection is added, push all added selections to array
-              changes.added.forEach((item) => {
-                const feature = item.feature;
-                features.push({
-                  feature: feature
-                });
-              });
-            });
+        }
 
-            // Listen for the click on the view and select any associated row in the table
-            view.on("immediate-click", (event) => {
-              view.hitTest(event).then((response) => {
-                const candidate = response.results.find((result) => {
-                  return (
-                    result.graphic &&
-                    result.graphic.layer &&
-                    result.graphic.layer === featureLayer
-                  );
-                });
-                // Select the rows of the clicked feature
-                candidate && featureTable.selectRows(candidate.graphic);
-              });
-            });
-          });
-        });
+        onCustomWidgetAfterUpdate(changedProperties) 
+        {
+            if ("servicelevel" in changedProperties) {
+                this.$servicelevel = changedProperties["servicelevel"];
+            }
+            gPassedServiceType = this.$servicelevel; // place passed in value into global
 
-              }); // end of require()
-          } // end of constructor()    
+            if ("portalurl" in changedProperties) {
+                this.$portalurl = changedProperties["portalurl"];
+            }
+            gPassedPortalURL = this.$portalurl; // place passed in value into global
 
-         getSelection() {
-              return this._currentSelection;
-          }
+            if ("apikey" in changedProperties) {
+                this.$apikey = changedProperties["apikey"];
+            }
+            gPassedAPIkey = this.$apikey; // place passed in value into global
 
-          onCustomWidgetBeforeUpdate(changedProperties)
-          {
-              this._props = { ...this._props, ...changedProperties };
-            // console.log(["Service Level",changedProperties["servicelevel"]]);
-
-          }
-
-          onCustomWidgetAfterUpdate(changedProperties) 
-          {
-              if ("servicelevel" in changedProperties) {
-                  this.$servicelevel = changedProperties["servicelevel"];
-              }
-              gPassedServiceType = this.$servicelevel; // place passed in value into global
-
-              if ("portalurl" in changedProperties) {
-                  this.$portalurl = changedProperties["portalurl"];
-              }
-              gPassedPortalURL = this.$portalurl; // place passed in value into global
-
-              if ("apikey" in changedProperties) {
-                  this.$apikey = changedProperties["apikey"];
-              }
-              gPassedAPIkey = this.$apikey; // place passed in value into global
-
-              // only attempt to filter displayed service locations if the webmap is initialized
-            if (gWebmapInstantiated === 1) {
-                  applyDefinitionQuery();
-              }
-          }
-      } // end of class
+            // only attempt to filter displayed service locations if the webmap is initialized
+           if (gWebmapInstantiated === 1) {
+                applyDefinitionQuery();
+            }
+        }
+    } // end of class
 
 
 
 
-      let scriptSrc = "https://js.arcgis.com/4.18/"
-      let onScriptLoaded = function() {
-          customElements.define("com-sap-custom-geomap", Map);
-      }
+    let scriptSrc = "https://js.arcgis.com/4.18/"
+    let onScriptLoaded = function() {
+        customElements.define("com-sap-custom-geomap", Map);
+    }
 
-      //SHARED FUNCTION: reuse between widgets
-      //function(src, callback) {
-      let customElementScripts = window.sessionStorage.getItem("customElementScripts") || [];
-      let scriptStatus = customElementScripts.find(function(element) {
-          return element.src == scriptSrc;
-      });
+    //SHARED FUNCTION: reuse between widgets
+    //function(src, callback) {
+    let customElementScripts = window.sessionStorage.getItem("customElementScripts") || [];
+    let scriptStatus = customElementScripts.find(function(element) {
+        return element.src == scriptSrc;
+    });
 
-      if (scriptStatus) {
-          if(scriptStatus.status == "ready") {
-              onScriptLoaded();
-          } else {
-              scriptStatus.callbacks.push(onScriptLoaded);
-          }
-      } else {
-          let scriptObject = {
-              "src": scriptSrc,
-              "status": "loading",
-              "callbacks": [onScriptLoaded]
-          }
-          customElementScripts.push(scriptObject);
-          var script = document.createElement("script");
-          script.type = "text/javascript";
-          script.src = scriptSrc;
-          script.onload = function(){
-              scriptObject.status = "ready";
-              scriptObject.callbacks.forEach((callbackFn) => callbackFn.call());
-          };
-          document.head.appendChild(script);
-      }
+    if (scriptStatus) {
+        if(scriptStatus.status == "ready") {
+            onScriptLoaded();
+        } else {
+            scriptStatus.callbacks.push(onScriptLoaded);
+        }
+    } else {
+        let scriptObject = {
+            "src": scriptSrc,
+            "status": "loading",
+            "callbacks": [onScriptLoaded]
+        }
+        customElementScripts.push(scriptObject);
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = scriptSrc;
+        script.onload = function(){
+            scriptObject.status = "ready";
+            scriptObject.callbacks.forEach((callbackFn) => callbackFn.call());
+        };
+        document.head.appendChild(script);
+    }
 
-  //END SHARED FUNCTION
-  })(); // end of class
+//END SHARED FUNCTION
+})(); // end of class
