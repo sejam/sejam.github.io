@@ -23,7 +23,7 @@
     //
     // A definition query filters what was first retrieved from the SPL feature service
     function applyDefinitionQuery() {
-        var svcLyr = gMyWebmap.findLayerById( '180b539cf17-layer-2' ); 
+        var svcLyr = gMyWebmap.findLayerById( '1808a4d63be-layer-2' ); 
 
         // make layers visible
         svcLyr.visible = true;
@@ -76,7 +76,7 @@
                 // replace the ID below with the ID to your web map
                 const webmap = new WebMap ({
                     portalItem: {
-                        id: "854de74765f34b7fbafd1fa0ceacc64e"
+                        id: "621801f6f8a44b999dc02633b1ff3f7e"
                     }
                 });
 
@@ -85,7 +85,7 @@
                 const view = new MapView({
                     container: "mapview",
                     map: webmap,
-                    zoom: 8
+                    zoom: 9
                 });
 
                 view.when(function () {
