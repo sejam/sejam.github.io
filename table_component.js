@@ -27,7 +27,15 @@
 
         // make layers visible
         svcLyr.visible = true;
+
+        // run the query
+            processDefinitionQuery();
     };
+
+    // process the definition query on the passed in SPL feature sublayer
+    function processDefinitionQuery()
+    {
+    }
 
     class Map extends HTMLElement {
         constructor() {
@@ -42,8 +50,17 @@
                 "esri/config",
                 "esri/WebMap",
                 "esri/views/MapView",
-                "esri/layers/FeatureLayer"
-            ], function(esriConfig, WebMap, MapView, FeatureLayer) {
+                "esri/widgets/BasemapToggle",
+                "esri/layers/FeatureLayer",
+                "esri/widgets/Expand",
+                "esri/tasks/RouteTask",
+                "esri/tasks/support/RouteParameters",
+                "esri/tasks/support/FeatureSet",
+                "esri/layers/support/Sublayer",
+                "esri/Graphic",
+                "esri/views/ui/UI",
+                "esri/views/ui/DefaultUI" 
+            ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, Expand, RouteTask, RouteParameters, FeatureSet, Sublayer, Graphic) {
         
                 // set portal and API Key
                 esriConfig.portalUrl = gPassedPortalURL
@@ -72,11 +89,11 @@
                 });
 
                 view.when(function () {
-                    view.popup.autoOpenEnabled = true; //enaable popups
+                    view.popup.autoOpenEnabled = true; //disable popups
                     gWebmapInstantiated = 1; // used in onCustomWidgetAfterUpdate
 
                     // find the SPL sublayer so a query is issued
-                   applyDefinitionQuery();
+                    applyDefinitionQuery();
                 });
 
             }); // end of require()
