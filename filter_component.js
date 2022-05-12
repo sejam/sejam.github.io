@@ -24,11 +24,11 @@
         <div id='mapview'></div>
         <div id="info-div" class="esri-widget">
             Filter by type<br /><br />
-            <select id="Bundesland">
-                <option value=""selected>All</option>
-                <option value=" WHERE Bundesland = 'Sachsen'">Sachsen</option>
-                <option value=" WHERE state = 'Bayern'">Bayern</option>
-                <option value=" WHERE Energiequelle = 'Waste'">Energiequelle</option>
+            <select id="layer-select">
+                <option value="">All</option>
+                <option value=" WHERE class = 'Sachsen'" selected>Sachsen</option>
+                <option value=" WHERE class = 'Hamburg'">Hamburg</option>
+                <option value=" WHERE state = 'Berlin'">Berlin</option>
             </select>
         </div>
     `;
@@ -111,6 +111,21 @@
 
                     // find the SPL sublayer so a query is issued
                     applyDefinitionQuery();
+                });
+                
+                view.when(() => {
+                    // change where clause when selection changes
+                    document
+                    .getElementById("layer-select")
+                    .addEventListener("change", (event) => {
+                        const newValue = event.target.value;
+                        const sublayer = layer.sublayers.find((sublayer) => {
+                            return sublayer.title === "state";
+                        });
+                        const updatedSublayer = sublayer.clone();
+                        updatedSublayer.source.dataSource.query = queryString + newValue;
+                        layer.sublayers = [updatedSublayer];
+                    });
                 });
 
             }); // end of require()
