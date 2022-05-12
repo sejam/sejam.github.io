@@ -114,7 +114,7 @@
                 
                 view.when(() => {
           const featureLayer = webmap.layers.getItemAt(0); //grabs the first layer in the map
-          featureLayer.title = "Energiequellen Standorte
+          featureLayer.title = "Energiequellen Standorte"
 
           // Create the feature table
           const featureTable = new FeatureTable({
@@ -140,11 +140,11 @@
               },
               {
                 name: "energy_source",
-                label: "Energiequelle
+                label: "Energiequelle"
               },
               {
-                name: "state
-                label: "Bundesland
+                name: "state"
+                label: "Bundesland"
               }
             ],
             container: document.getElementById("tableDiv")
