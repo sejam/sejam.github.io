@@ -89,7 +89,7 @@
                 "esri/Graphic",
                 //"esri/core/reactiveUtils",
                 "esri/layers/FeatureLayer",
-                "esri/widgets/FeatureTable",
+                //"esri/widgets/FeatureTable",
                 "esri/views/ui/UI",
                 "esri/views/ui/DefaultUI"
             ], function(esriConfig,
@@ -104,8 +104,9 @@
                          Sublayer,
                          Graphic,
                          //reactiveUtils,
-                         FeatureLayer,
-                         FeatureTable) {
+                         FeatureLayer
+                         //FeatureTable
+                        ) {
         
                 // set portal and API Key
                 esriConfig.portalUrl = gPassedPortalURL
