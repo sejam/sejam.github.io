@@ -46,8 +46,6 @@
                 "esri/widgets/BasemapToggle",
                 "esri/widgets/TimeSlider",
                 "esri/widgets/Expand",
-                "esri/tasks/RouteTask",
-                "esri/tasks/support/RouteParameters",
                 "esri/tasks/support/FeatureSet",
                 "esri/layers/support/Sublayer",
                 "esri/Graphic",
@@ -62,8 +60,6 @@
                          BasemapToggle,
                          TimeSlider,
                          Expand,
-                         RouteTask,
-                         RouteParameters,
                          FeatureSet,
                          Sublayer,
                          Graphic,
@@ -90,7 +86,7 @@
                 const view = new MapView({
                     container: "mapview",
                     map: webmap,
-                    zoom: 12,
+                    zoom: 8,
                     popup: {
                         autoOpenEnabled: false
                     } //disable popups
