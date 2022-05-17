@@ -31,19 +31,9 @@
     // A definition query filters what was first retrieved from the SPL feature service
     function applyDefinitionQuery() {
         var svcLyr = gMyWebmap.findLayerById( '180b539cf17-layer-2' ); 
-        console.log( "Layer is");
-        console.log( svcLyr);
 
         // make layers visible
         svcLyr.visible = true;
-
-        // only execute when the sublayer is loaded. Note this is asynchronous
-        // so it may be skipped over during execution and be executed after exiting this function
-        svcLyr.when(function() {
-            gMyLyr = svcLyr.findSublayerById(6);    // store in global variable
-            
-            // force sublayer visible
-            gMyLyr.visible = true;
     };
 
     class Map extends HTMLElement {
