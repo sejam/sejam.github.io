@@ -14,8 +14,15 @@
             width: 100%;
             height: 100%;
         }
+        #timeSlider {
+            position: absolute;
+            left: 5%;
+            right: 15%;
+            bottom: 20px;
+        }
         </style>
         <div id='mapview'></div>
+        <div id='timeSlider'></div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
@@ -24,11 +31,34 @@
     // A definition query filters what was first retrieved from the SPL feature service
     function applyDefinitionQuery() {
         var svcLyr = gMyWebmap.findLayerById( '180b539cf17-layer-2' ); 
+        console.log( "Layer is");
+        console.log( svcLyr);
 
         // make layers visible
         svcLyr.visible = true;
+
+        // only execute when the sublayer is loaded. Note this is asynchronous
+        // so it may be skipped over during execution and be executed after exiting this function
+        svcLyr.when(function() {
+            gMyLyr = svcLyr.findSublayerById(6);    // store in global variable
+            console.log("Sublayer loaded...");
+            console.log( "Sublayer is");
+            console.log( gMyLyr);
+
+            // force sublayer visible
+            gMyLyr.visible = true;
+
+            // run the query
+            processDefinitionQuery();
+        });
     };
-    
+
+    // process the definition query on the passed in SPL feature sublayer
+    function processDefinitionQuery()
+    {
+        // values of passedServiceType
+    }
+
     class Map extends HTMLElement {
         constructor() {
             super();
@@ -42,7 +72,18 @@
                 "esri/config",
                 "esri/WebMap",
                 "esri/views/MapView",
-            ], function(esriConfig, WebMap, MapView) {
+                "esri/widgets/BasemapToggle",
+                "esri/layers/FeatureLayer",
+                "esri/widgets/TimeSlider",
+                "esri/widgets/Expand",
+                "esri/tasks/RouteTask",
+                "esri/tasks/support/RouteParameters",
+                "esri/tasks/support/FeatureSet",
+                "esri/layers/support/Sublayer",
+                "esri/Graphic",
+                "esri/views/ui/UI",
+                "esri/views/ui/DefaultUI" 
+            ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, TimeSlider, Expand, RouteTask, RouteParameters, FeatureSet, Sublayer, Graphic) {
         
                 // set portal and API Key
                 esriConfig.portalUrl = gPassedPortalURL
@@ -61,6 +102,8 @@
                         id: "854de74765f34b7fbafd1fa0ceacc64e"
                     }
                 });
+
+                gMyWebmap = webmap;  // save to global variable
 
                 const view = new MapView({
                     container: "mapview",
