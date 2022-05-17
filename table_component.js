@@ -10,19 +10,26 @@
     template.innerHTML = `
         <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/light/main.css">
         <style>
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
         #mapview {
             width: 100%;
             height: 100%;
         }
-        #timeSlider {
-            position: absolute;
-            left: 5%;
-            right: 15%;
-            bottom: 20px;
+        .container {
+            height: 50%;
+            width: 100%;
         }
         </style>
         <div id='mapview'></div>
-        <div id='timeSlider'></div>
+        <div class="container">
+            <div id="tableDiv"></div>
+        </div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
@@ -108,7 +115,7 @@
                 const view = new MapView({
                     container: "mapview",
                     map: webmap,
-                    zoom: 7
+                    zoom: 12
                 });
 
                 view.when(function () {
