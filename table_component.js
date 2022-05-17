@@ -89,7 +89,7 @@
                 "esri/Graphic",
                 //"esri/core/reactiveUtils",
                 "esri/layers/FeatureLayer",
-                //"esri/widgets/FeatureTable",
+                "esri/widgets/FeatureTable",
                 "esri/views/ui/UI",
                 "esri/views/ui/DefaultUI"
             ], function(esriConfig,
@@ -104,8 +104,8 @@
                          Sublayer,
                          Graphic,
                          //reactiveUtils,
-                         FeatureLayer
-                         //FeatureTable
+                         FeatureLayer,
+                         FeatureTable
                         ) {
         
                 // set portal and API Key
@@ -131,7 +131,7 @@
                 const view = new MapView({
                     container: "mapview",
                     map: webmap,
-                    zoom: 10
+                    zoom: 6
                 });
 
                 view.when(function () {
