@@ -80,7 +80,6 @@
                 "esri/WebMap",
                 "esri/views/MapView",
                 "esri/widgets/BasemapToggle",
-                "esri/layers/FeatureLayer",
                 "esri/widgets/TimeSlider",
                 "esri/widgets/Expand",
                 "esri/tasks/RouteTask",
@@ -88,9 +87,25 @@
                 "esri/tasks/support/FeatureSet",
                 "esri/layers/support/Sublayer",
                 "esri/Graphic",
+                "esri/core/reactiveUtils",
+                "esri/layers/FeatureLayer",
+                "esri/widgets/FeatureTable",
                 "esri/views/ui/UI",
-                "esri/views/ui/DefaultUI" 
-            ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, TimeSlider, Expand, RouteTask, RouteParameters, FeatureSet, Sublayer, Graphic) {
+                "esri/views/ui/DefaultUI"
+            ], function(esriConfig,
+                         WebMap,
+                         MapView,
+                         BasemapToggle,
+                         TimeSlider,
+                         Expand,
+                         RouteTask,
+                         RouteParameters,
+                         FeatureSet,
+                         Sublayer,
+                         Graphic,
+                         reactiveUtils,
+                         FeatureLayer,
+                         FeatureTable) {
         
                 // set portal and API Key
                 esriConfig.portalUrl = gPassedPortalURL
