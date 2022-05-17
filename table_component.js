@@ -10,12 +10,26 @@
     template.innerHTML = `
         <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/light/main.css">
         <style>
-        #mapview {
-            width: 100%;
+        html,
+        body {
             height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #viewDiv {
+            height: 50%;
+            width: 100%;
+        }
+        .container {
+            height: 50%;
+            width: 100%;
         }
         </style>
-        <div id='mapview'></div>
+        <div id="viewDiv"></div>
+        <div class="container">
+            <div id="tableDiv"></div>
+        </div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
@@ -50,17 +64,10 @@
                 "esri/config",
                 "esri/WebMap",
                 "esri/views/MapView",
-                "esri/widgets/BasemapToggle",
+                "esri/core/reactiveUtils",
                 "esri/layers/FeatureLayer",
-                "esri/widgets/Expand",
-                "esri/tasks/RouteTask",
-                "esri/tasks/support/RouteParameters",
-                "esri/tasks/support/FeatureSet",
-                "esri/layers/support/Sublayer",
-                "esri/Graphic",
-                "esri/views/ui/UI",
-                "esri/views/ui/DefaultUI" 
-            ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, Expand, RouteTask, RouteParameters, FeatureSet, Sublayer, Graphic) {
+                "esri/widgets/FeatureTable"
+            ], function(esriConfig, WebMap, MapView, reactiveUtils, FeatureLayer, FeatureTable) {
         
                 // set portal and API Key
                 esriConfig.portalUrl = gPassedPortalURL
@@ -80,21 +87,124 @@
                     }
                 });
 
-                gMyWebmap = webmap;  // save to global variable
-
                 const view = new MapView({
-                    container: "mapview",
+                    container: "viewDiv",
                     map: webmap,
-                    zoom: 7
+                    zoom: 7,
+                    popup: {
+                        autoOpenEnabled: false
+                    } //disable popups
                 });
 
-                view.when(function () {
-                    view.popup.autoOpenEnabled = true; //disable popups
-                    gWebmapInstantiated = 1; // used in onCustomWidgetAfterUpdate
+                view.when(() => {
+                    const featureLayer = webmap.layers.getItemAt(0); //grabs the first layer in the map
+                    featureLayer.title = "Energiequellen";
 
-                    // find the SPL sublayer so a query is issued
-                    applyDefinitionQuery();
-                });
+                    // Create the feature table
+                    const featureTable = new FeatureTable({
+                        view: view, // required for feature highlight to work
+                        layer: featureLayer,
+                        visibleElements: {
+                            // autocast to VisibleElements
+                            menuItems: {
+                                clearSelection: true,
+                                refreshData: true,
+                                toggleColumns: true,
+                                selectedRecordsShowAllToggle: true,
+                                selectedRecordsShowSelectedToggle: true,
+                                zoomToSelection: false
+                            }
+                        },
+                        // autocast to FieldColumnConfigs
+                        fieldConfigs: [
+                        {
+                            name: "id",
+                            label: "ID",
+                            direction: "asc"
+                        },
+                        {
+                            name: "capacity_net_bnetza",
+                            label: "Leistung in MW"
+                        },
+                        {
+                            name: "energy_source",
+                            label: "Energiequelle"
+                        },
+                        {
+                            name: "name_bnetza",
+                            label: "Kraftwerke"
+                        },
+                        {
+                            name: "company",
+                            label: "Firma"
+                        },
+                        {
+                            name: "city",
+                            label: "Stadt"
+                        },
+                        {
+                            name: "state",
+                            label: "Bundesland"
+                        }
+                        ],
+                        container: document.getElementById("tableDiv")
+                    });
+
+                    // Listen for when the view is updated. If so, pass the new view.extent into the table's filterGeometry
+                    featureLayer.watch("loaded", () => {
+                        reactiveUtils.when(
+                        () => view.updating === false,
+                        () => {
+                            // Get the new extent of view/map whenever map is updated.
+                            if (view.extent) {
+                                // Filter out and show only the visible features in the feature table
+                                featureTable.filterGeometry = view.extent;
+
+                                // Listen for the table's selection-change event
+                                featureTable.on("selection-change", (changes) => {
+                                    console.log(changes);
+                                });
+                            }
+                        }
+                   );
+          });
+
+          // Listen for the table's selection-change event
+          featureTable.on("selection-change", (changes) => {
+              // If the selection is removed, remove the feature from the array
+                  changes.removed.forEach((item) => {
+                      const data = features.find((data) => {
+                          return data.feature === item.feature;
+                      });
+                      if (data) {
+                          features.splice(features.indexOf(data), 1);
+                      }
+                  });
+
+                  // If the selection is added, push all added selections to array
+                  changes.added.forEach((item) => {
+                      const feature = item.feature;
+                          features.push({
+                              feature: feature
+                          });
+                      });
+                  });
+
+                  // Listen for the click on the view and select any associated row in the table
+                  view.on("immediate-click", (event) => {
+                      view.hitTest(event).then((response) => {
+                          const candidate = response.results.find((result) => {
+                              return (
+                              result.graphic &&
+                              result.graphic.layer &&
+                              result.graphic.layer === featureLayer
+                              );
+                          });
+                          // Select the rows of the clicked feature
+                          candidate && featureTable.selectRows(candidate.graphic);
+                     });
+                  });
+              });
 
             }); // end of require()
         } // end of constructor()    
