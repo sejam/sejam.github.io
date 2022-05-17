@@ -4,8 +4,6 @@
     var gPassedPortalURL; //ESRI Portal URL
     var gPassedAPIkey; //ESRI JS api key
     var gWebmapInstantiated = 0; // a global used in applying definition query
-    var gMyLyr; // for sublayer
-    var gMyWebmap; // needs to be global for async call to onCustomWidgetAfterUpdate()
 
     template.innerHTML = `
         <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/light/main.css">
@@ -112,15 +110,6 @@
                     center: [10, 50],
                     zoom: 4
                 });
-                
-                //replace the ID below with the ID to your web map
-                const webmap = new WebMap ({
-                    portalItem: {
-                        id: "d0d1305e34ef49bc9888f590758d5128"
-                    }
-                });
-                
-                gMyWebmap = webmap;  // save to global variable
 
                 const stateNodes = document.querySelectorAll(`.state-item`);
         const stateElement = document.getElementById("state-filter");
