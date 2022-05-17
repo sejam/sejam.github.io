@@ -14,23 +14,8 @@
             width: 100%;
             height: 100%;
         }
-        #info-div {
-            background-color: white;
-            border-radius: 8px;
-            padding: 8px;
-            opacity: 0.92;
-        }
         </style>
         <div id='mapview'></div>
-        <div id="info-div" class="esri-widget">
-            Filter by type<br /><br />
-            <select id="layer-select">
-                <option value="">All</option>
-                <option value=" WHERE class = 'Sachsen'" selected>Sachsen</option>
-                <option value=" WHERE class = 'Hamburg'">Hamburg</option>
-                <option value=" WHERE state = 'Berlin'">Berlin</option>
-            </select>
-        </div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
@@ -38,20 +23,12 @@
     //
     // A definition query filters what was first retrieved from the SPL feature service
     function applyDefinitionQuery() {
-        var svcLyr = gMyWebmap.findLayerById( '1808a4d63be-layer-2' ); 
+        var svcLyr = gMyWebmap.findLayerById( '180b520ff08-layer-3' ); 
 
         // make layers visible
         svcLyr.visible = true;
-
-        // run the query
-            processDefinitionQuery();
     };
-
-    // process the definition query on the passed in SPL feature sublayer
-    function processDefinitionQuery()
-    {
-    }
-
+    
     class Map extends HTMLElement {
         constructor() {
             super();
@@ -65,17 +42,7 @@
                 "esri/config",
                 "esri/WebMap",
                 "esri/views/MapView",
-                "esri/widgets/BasemapToggle",
-                "esri/layers/FeatureLayer",
-                "esri/widgets/Expand",
-                "esri/tasks/RouteTask",
-                "esri/tasks/support/RouteParameters",
-                "esri/tasks/support/FeatureSet",
-                "esri/layers/support/Sublayer",
-                "esri/Graphic",
-                "esri/views/ui/UI",
-                "esri/views/ui/DefaultUI" 
-            ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, Expand, RouteTask, RouteParameters, FeatureSet, Sublayer, Graphic) {
+            ], function(esriConfig, WebMap, MapView) {
         
                 // set portal and API Key
                 esriConfig.portalUrl = gPassedPortalURL
@@ -95,15 +62,11 @@
                     }
                 });
 
-                gMyWebmap = webmap;  // save to global variable
-
                 const view = new MapView({
                     container: "mapview",
                     map: webmap,
-                    zoom: 9
+                    zoom: 7
                 });
-                
-                view.ui.add("info-div", "top-right");
 
                 view.when(function () {
                     view.popup.autoOpenEnabled = true; //disable popups
@@ -111,21 +74,6 @@
 
                     // find the SPL sublayer so a query is issued
                     applyDefinitionQuery();
-                });
-                
-                view.when(() => {
-                    // change where clause when selection changes
-                    document
-                    .getElementById("layer-select")
-                    .addEventListener("change", (event) => {
-                        const newValue = event.target.value;
-                        const sublayer = layer.sublayers.find((sublayer) => {
-                            return sublayer.title === "state";
-                        });
-                        const updatedSublayer = sublayer.clone();
-                        updatedSublayer.source.dataSource.query = queryString + newValue;
-                        layer.sublayers = [updatedSublayer];
-                    });
                 });
 
             }); // end of require()
