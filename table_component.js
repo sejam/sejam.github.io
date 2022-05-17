@@ -80,7 +80,6 @@
                 "esri/WebMap",
                 "esri/views/MapView",
                 "esri/widgets/BasemapToggle",
-                "esri/layers/FeatureLayer",
                 "esri/widgets/TimeSlider",
                 "esri/widgets/Expand",
                 "esri/tasks/RouteTask",
@@ -90,7 +89,10 @@
                 "esri/Graphic",
                 "esri/views/ui/UI",
                 "esri/views/ui/DefaultUI" 
-            ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, TimeSlider, Expand, RouteTask, RouteParameters, FeatureSet, Sublayer, Graphic) {
+                "esri/core/reactiveUtils",
+                "esri/layers/FeatureLayer",
+                "esri/widgets/FeatureTable"
+            ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, TimeSlider, Expand, RouteTask, RouteParameters, FeatureSet, Sublayer, Graphic, reactiveUtils, FeatureLayer, FeatureTable) {
         
                 // set portal and API Key
                 esriConfig.portalUrl = gPassedPortalURL
@@ -103,6 +105,7 @@
                     url: "https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World"
                 });
         
+                const features = [];
                 // replace the ID below with the ID to your web map
                 const webmap = new WebMap ({
                     portalItem: {
@@ -115,7 +118,10 @@
                 const view = new MapView({
                     container: "mapview",
                     map: webmap,
-                    zoom: 7
+                    zoom: 10
+                    popup: {
+                        autoOpenEnabled: false
+                    } //disable popups
                 });
 
                 view.when(function () {
