@@ -13,6 +13,8 @@
         html,
         body,
         #mapview {
+            padding: 0;
+            margin: 0;
             width: 100%;
             height: 100%;
         }
@@ -83,31 +85,42 @@
                 "esri/views/ui/DefaultUI" 
             ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, TimeSlider, Expand, RouteTask, RouteParameters, FeatureSet, Sublayer, Graphic) {
         
+                let ensourceLayerView;
+                
                 // set portal and API Key
                 esriConfig.portalUrl = gPassedPortalURL
 
                 //  set esri api Key 
                 esriConfig.apiKey = gPassedAPIkey
         
-                // set routing service
-                var routeTask = new RouteTask({
-                    url: "https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World"
+                // flash flood warnings layer
+                const layer = new FeatureLayer({
+                    portalItem: {
+                        id: "09cc50ad7a8f40b096c6b22052935788"
+                    },
+                    outFields: ["state"]
                 });
-        
-                // replace the ID below with the ID to your web map
+
+                const map = new Map({
+                    basemap: "streets-navigation-vector",
+                    layers: [layer]
+                });
+                
+                gMyWebmap = map;  // save to global variable
+
+                const view = new MapView({
+                    map: map,
+                    container: "mapview",
+                    center: [10, 50],
+                    zoom: 4
+                });
+                
+                /* replace the ID below with the ID to your web map
                 const webmap = new WebMap ({
                     portalItem: {
                         id: "d0d1305e34ef49bc9888f590758d5128"
                     }
-                });
-
-                gMyWebmap = webmap;  // save to global variable
-
-                const view = new MapView({
-                    container: "mapview",
-                    map: webmap,
-                    zoom: 7
-                });
+                });*/
 
                 view.when(function () {
                     view.popup.autoOpenEnabled = true; //disable popups
