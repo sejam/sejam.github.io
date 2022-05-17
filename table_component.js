@@ -10,26 +10,19 @@
     template.innerHTML = `
         <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/light/main.css">
         <style>
-        html,
-        body {
+        #mapview {
+            width: 100%;
             height: 100%;
-            width: 100%;
-            margin: 0;
-            padding: 0;
         }
-        #viewDiv {
-            height: 50%;
-            width: 100%;
-        }
-        .container {
-            height: 50%;
-            width: 100%;
+        #timeSlider {
+            position: absolute;
+            left: 5%;
+            right: 15%;
+            bottom: 20px;
         }
         </style>
-        <div id="viewDiv"></div>
-        <div class="container">
-            <div id="tableDiv"></div>
-        </div>
+        <div id='mapview'></div>
+        <div id='timeSlider'></div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
@@ -38,18 +31,20 @@
     // A definition query filters what was first retrieved from the SPL feature service
     function applyDefinitionQuery() {
         var svcLyr = gMyWebmap.findLayerById( '180b539cf17-layer-2' ); 
+        console.log( "Layer is");
+        console.log( svcLyr);
 
         // make layers visible
         svcLyr.visible = true;
 
-        // run the query
-            processDefinitionQuery();
+        // only execute when the sublayer is loaded. Note this is asynchronous
+        // so it may be skipped over during execution and be executed after exiting this function
+        svcLyr.when(function() {
+            gMyLyr = svcLyr.findSublayerById(6);    // store in global variable
+            
+            // force sublayer visible
+            gMyLyr.visible = true;
     };
-
-    // process the definition query on the passed in SPL feature sublayer
-    function processDefinitionQuery()
-    {
-    }
 
     class Map extends HTMLElement {
         constructor() {
@@ -63,11 +58,8 @@
             require([
                 "esri/config",
                 "esri/WebMap",
-                "esri/views/MapView",
-                "esri/core/reactiveUtils",
-                "esri/layers/FeatureLayer",
-                "esri/widgets/FeatureTable"
-            ], function(esriConfig, WebMap, MapView, reactiveUtils, FeatureLayer, FeatureTable) {
+                "esri/views/MapView" 
+            ], function(esriConfig, WebMap, MapView) {
         
                 // set portal and API Key
                 esriConfig.portalUrl = gPassedPortalURL
@@ -80,7 +72,6 @@
                     url: "https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World"
                 });
         
-                const features = [];
                 // replace the ID below with the ID to your web map
                 const webmap = new WebMap ({
                     portalItem: {
@@ -89,123 +80,18 @@
                 });
 
                 const view = new MapView({
-                    container: "viewDiv",
+                    container: "mapview",
                     map: webmap,
-                    zoom: 7,
-                    popup: {
-                        autoOpenEnabled: false
-                    } //disable popups
+                    zoom: 7
                 });
 
-                view.when(() => {
-                    const featureLayer = webmap.layers.getItemAt(0); //grabs the first layer in the map
-                    featureLayer.title = "Energiequellen";
+                view.when(function () {
+                    view.popup.autoOpenEnabled = true; //disable popups
+                    gWebmapInstantiated = 1; // used in onCustomWidgetAfterUpdate
 
-                    // Create the feature table
-                    const featureTable = new FeatureTable({
-                        view: view, // required for feature highlight to work
-                        layer: featureLayer,
-                        visibleElements: {
-                            // autocast to VisibleElements
-                            menuItems: {
-                                clearSelection: true,
-                                refreshData: true,
-                                toggleColumns: true,
-                                selectedRecordsShowAllToggle: true,
-                                selectedRecordsShowSelectedToggle: true,
-                                zoomToSelection: false
-                            }
-                        },
-                        // autocast to FieldColumnConfigs
-                        fieldConfigs: [
-                        {
-                            name: "id",
-                            label: "ID",
-                            direction: "asc"
-                        },
-                        {
-                            name: "capacity_net_bnetza",
-                            label: "Leistung in MW"
-                        },
-                        {
-                            name: "energy_source",
-                            label: "Energiequelle"
-                        },
-                        {
-                            name: "name_bnetza",
-                            label: "Kraftwerke"
-                        },
-                        {
-                            name: "company",
-                            label: "Firma"
-                        },
-                        {
-                            name: "city",
-                            label: "Stadt"
-                        },
-                        {
-                            name: "state",
-                            label: "Bundesland"
-                        }
-                        ],
-                        container: document.getElementById("tableDiv")
-                    });
-
-                    // Listen for when the view is updated. If so, pass the new view.extent into the table's filterGeometry
-                    featureLayer.watch("loaded", () => {
-                        reactiveUtils.when(
-                        () => view.updating === false,
-                        () => {
-                            // Get the new extent of view/map whenever map is updated.
-                            if (view.extent) {
-                                // Filter out and show only the visible features in the feature table
-                                featureTable.filterGeometry = view.extent;
-
-                                // Listen for the table's selection-change event
-                                featureTable.on("selection-change", (changes) => {
-                                    console.log(changes);
-                                });
-                            }
-                        }
-                   );
-          });
-
-          // Listen for the table's selection-change event
-          featureTable.on("selection-change", (changes) => {
-              // If the selection is removed, remove the feature from the array
-                  changes.removed.forEach((item) => {
-                      const data = features.find((data) => {
-                          return data.feature === item.feature;
-                      });
-                      if (data) {
-                          features.splice(features.indexOf(data), 1);
-                      }
-                  });
-
-                  // If the selection is added, push all added selections to array
-                  changes.added.forEach((item) => {
-                      const feature = item.feature;
-                          features.push({
-                              feature: feature
-                          });
-                      });
-                  });
-
-                  // Listen for the click on the view and select any associated row in the table
-                  view.on("immediate-click", (event) => {
-                      view.hitTest(event).then((response) => {
-                          const candidate = response.results.find((result) => {
-                              return (
-                              result.graphic &&
-                              result.graphic.layer &&
-                              result.graphic.layer === featureLayer
-                              );
-                          });
-                          // Select the rows of the clicked feature
-                          candidate && featureTable.selectRows(candidate.graphic);
-                     });
-                  });
-              });
+                    // find the SPL sublayer so a query is issued
+                    applyDefinitionQuery();
+                });
 
             }); // end of require()
         } // end of constructor()    
@@ -244,9 +130,6 @@
             }
         }
     } // end of class
-
-
-
 
     let scriptSrc = "https://js.arcgis.com/4.18/"
     let onScriptLoaded = function() {
