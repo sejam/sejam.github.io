@@ -113,11 +113,8 @@
 
                 //  set esri api Key 
                 esriConfig.apiKey = gPassedAPIkey
-        
-                // set routing service
-                var routeTask = new RouteTask({
-                    url: "https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World"
-                });
+                
+                const features = [];
         
                 // replace the ID below with the ID to your web map
                 const webmap = new WebMap ({
@@ -131,16 +128,121 @@
                 const view = new MapView({
                     container: "mapview",
                     map: webmap,
-                    zoom: 6
+                    zoom: 7,
+                    popup: {
+                        autoOpenEnabled: false
+                    } //disable popups
                 });
 
-                view.when(function () {
-                    view.popup.autoOpenEnabled = true; //disable popups
-                    gWebmapInstantiated = 1; // used in onCustomWidgetAfterUpdate
+                view.when(() => {
+          const featureLayer = webmap.layers.getItemAt(0); //grabs the first layer in the map
+          featureLayer.title = "Energiequellen";
 
-                    // find the SPL sublayer so a query is issued
-                    applyDefinitionQuery();
-                });
+          // Create the feature table
+          const featureTable = new FeatureTable({
+            view: view, // required for feature highlight to work
+            layer: featureLayer,
+            visibleElements: {
+              // autocast to VisibleElements
+              menuItems: {
+                clearSelection: true,
+                refreshData: true,
+                toggleColumns: true,
+                selectedRecordsShowAllToggle: true,
+                selectedRecordsShowSelectedToggle: true,
+                zoomToSelection: false
+              }
+            },
+            // autocast to FieldColumnConfigs
+            fieldConfigs: [
+              {
+                name: "id",
+                label: "ID",
+                direction: "asc"
+              },
+              {
+                name: "capacity_net_bnetza",
+                label: "Leistung in MW"
+              },
+              {
+                name: "energy_source",
+                label: "Energiequelle"
+              },
+              {
+                name: "name_bnetza",
+                label: "Kraftwerke"
+              },
+              {
+                name: "company",
+                label: "Firma"
+              },
+              {
+                name: "city",
+                label: "Stadt"
+              },
+              {
+                name: "state",
+                label: "Bundesland"
+              }
+            ],
+            container: document.getElementById("tableDiv")
+          });
+
+          // Listen for when the view is updated. If so, pass the new view.extent into the table's filterGeometry
+          featureLayer.watch("loaded", () => {
+            //reactiveUtils.when(
+              () => view.updating === false,
+              () => {
+                // Get the new extent of view/map whenever map is updated.
+                if (view.extent) {
+                  // Filter out and show only the visible features in the feature table
+                  featureTable.filterGeometry = view.extent;
+
+                  // Listen for the table's selection-change event
+                  featureTable.on("selection-change", (changes) => {
+                    console.log(changes);
+                  });
+                }
+              }
+            //);
+          });
+
+          // Listen for the table's selection-change event
+          featureTable.on("selection-change", (changes) => {
+            // If the selection is removed, remove the feature from the array
+            changes.removed.forEach((item) => {
+              const data = features.find((data) => {
+                return data.feature === item.feature;
+              });
+              if (data) {
+                features.splice(features.indexOf(data), 1);
+              }
+            });
+
+            // If the selection is added, push all added selections to array
+            changes.added.forEach((item) => {
+              const feature = item.feature;
+              features.push({
+                feature: feature
+              });
+            });
+          });
+
+          // Listen for the click on the view and select any associated row in the table
+          view.on("immediate-click", (event) => {
+            view.hitTest(event).then((response) => {
+              const candidate = response.results.find((result) => {
+                return (
+                  result.graphic &&
+                  result.graphic.layer &&
+                  result.graphic.layer === featureLayer
+                );
+              });
+              // Select the rows of the clicked feature
+              candidate && featureTable.selectRows(candidate.graphic);
+            });
+          });
+        });
 
             }); // end of require()
         } // end of constructor()    
