@@ -80,6 +80,7 @@
                     url: "https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World"
                 });
         
+                const features = [];
                 // replace the ID below with the ID to your web map
                 const webmap = new WebMap ({
                     portalItem: {
