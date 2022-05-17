@@ -56,40 +56,6 @@
             <div>der Bundesländer</div>
         </div>
     `;
-    
-    // this function takes the passed in servicelevel and issues a definition query
-    // to filter service location geometries
-    //
-    // A definition query filters what was first retrieved from the SPL feature service
-    function applyDefinitionQuery() {
-        var svcLyr = gMyWebmap.findLayerById( '180b520ff08-layer-3' ); 
-        console.log( "Layer is");
-        console.log( svcLyr);
-
-        // make layers visible
-        svcLyr.visible = true;
-
-        // only execute when the sublayer is loaded. Note this is asynchronous
-        // so it may be skipped over during execution and be executed after exiting this function
-        svcLyr.when(function() {
-            gMyLyr = svcLyr.findSublayerById(6);    // store in global variable
-            console.log("Sublayer loaded...");
-            console.log( "Sublayer is");
-            console.log( gMyLyr);
-
-            // force sublayer visible
-            gMyLyr.visible = true;
-
-            // run the query
-            processDefinitionQuery();
-        });
-    };
-
-    // process the definition query on the passed in SPL feature sublayer
-    function processDefinitionQuery()
-    {
-        // values of passedServiceType
-    }
 
     class Map extends HTMLElement {
         constructor() {
