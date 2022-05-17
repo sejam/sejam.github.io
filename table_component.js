@@ -87,7 +87,7 @@
                 "esri/tasks/support/FeatureSet",
                 "esri/layers/support/Sublayer",
                 "esri/Graphic",
-                //"esri/core/reactiveUtils",
+                "esri/core/reactiveUtils",
                 "esri/layers/FeatureLayer",
                 //"esri/widgets/FeatureTable",
                 "esri/views/ui/UI",
@@ -103,7 +103,7 @@
                          FeatureSet,
                          Sublayer,
                          Graphic,
-                         //reactiveUtils,
+                         reactiveUtils,
                          FeatureLayer
                          //FeatureTable
                         ) {
@@ -131,7 +131,7 @@
                 const view = new MapView({
                     container: "mapview",
                     map: webmap,
-                    zoom: 6
+                    zoom: 10
                 });
 
                 view.when(function () {
