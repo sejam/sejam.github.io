@@ -125,9 +125,7 @@
                 view.when(function () {
                     view.popup.autoOpenEnabled = true; //disable popups
                     gWebmapInstantiated = 1; // used in onCustomWidgetAfterUpdate
-
-                    // find the SPL sublayer so a query is issued
-                    applyDefinitionQuery();
+                    
                 });
 
             }); // end of require()
