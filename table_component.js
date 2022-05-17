@@ -4,8 +4,6 @@
     var gPassedPortalURL; //ESRI Portal URL
     var gPassedAPIkey; //ESRI JS api key
     var gWebmapInstantiated = 0; // a global used in applying definition query
-    var gMyLyr; // for sublayer
-    var gMyWebmap; // needs to be global for async call to onCustomWidgetAfterUpdate()
 
     template.innerHTML = `
         <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/light/main.css">
@@ -31,40 +29,6 @@
             <div id="tableDiv"></div>
         </div>
     `;
-    
-    // this function takes the passed in servicelevel and issues a definition query
-    // to filter service location geometries
-    //
-    // A definition query filters what was first retrieved from the SPL feature service
-    function applyDefinitionQuery() {
-        var svcLyr = gMyWebmap.findLayerById( '180b539cf17-layer-2' ); 
-        console.log( "Layer is");
-        console.log( svcLyr);
-
-        // make layers visible
-        svcLyr.visible = true;
-
-        // only execute when the sublayer is loaded. Note this is asynchronous
-        // so it may be skipped over during execution and be executed after exiting this function
-        svcLyr.when(function() {
-            gMyLyr = svcLyr.findSublayerById(6);    // store in global variable
-            console.log("Sublayer loaded...");
-            console.log( "Sublayer is");
-            console.log( gMyLyr);
-
-            // force sublayer visible
-            gMyLyr.visible = true;
-
-            // run the query
-            processDefinitionQuery();
-        });
-    };
-
-    // process the definition query on the passed in SPL feature sublayer
-    function processDefinitionQuery()
-    {
-        // values of passedServiceType
-    }
 
     class Map extends HTMLElement {
         constructor() {
@@ -123,12 +87,10 @@
                     }
                 });
 
-                gMyWebmap = webmap;  // save to global variable
-
                 const view = new MapView({
                     container: "mapview",
                     map: webmap,
-                    zoom: 7,
+                    zoom: 12,
                     popup: {
                         autoOpenEnabled: false
                     } //disable popups
