@@ -10,19 +10,51 @@
     template.innerHTML = `
         <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/light/main.css">
         <style>
+        html,
+        body,
         #mapview {
             width: 100%;
             height: 100%;
         }
-        #timeSlider {
-            position: absolute;
-            left: 5%;
-            right: 15%;
-            bottom: 20px;
+        #state-filter {
+            height: 160px;
+            width: 100%;
+            visibility: hidden;
+        }
+        .state-item {
+            width: 100%;
+            padding: 12px;
+            text-align: center;
+            vertical-align: baseline;
+            cursor: pointer;
+            height: 40px;
+        }
+        .state-item:focus {
+            background-color: dimgrey;
+        }
+        .state-item:hover {
+            background-color: dimgrey;
+        }
+        #titleDiv {
+            padding: 10px;
+        }
+        #titleText {
+            font-size: 20pt;
+            font-weight: 60;
+            padding-bottom: 10px;
         }
         </style>
-        <div id='mapview'></div>
-        <div id='timeSlider'></div>
+        <div id="state-filter" class="esri-widget">
+            <div class="state-item visible-state" data-state="Sachsen">Sachsen</div>
+            <div class="state-item visible-state" data-state="Brandenburg">Brandenburg</div>
+            <div class="state-item visible-state" data-state="Berlin">Berlin</div>
+            <div class="state-item visible-state" data-state="Bayern">Bayern</div>
+        </div>
+        <div id="mapview"></div>
+        <div id="titleDiv" class="esri-widget">
+            <div id="titleText">Energiequellen</div>
+            <div>der Bundesländer</div>
+        </div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
@@ -95,28 +127,68 @@
                 var routeTask = new RouteTask({
                     url: "https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World"
                 });
-        
-                // replace the ID below with the ID to your web map
-                const webmap = new WebMap ({
+                
+                let floodLayerView;
+
+                // flash flood warnings layer
+                const layer = new FeatureLayer({
                     portalItem: {
-                        id: "d0d1305e34ef49bc9888f590758d5128"
-                    }
+                        id: "09cc50ad7a8f40b096c6b22052935788"
+                    },
+                    outFields: ["state"]
+                });
+
+                const map = new Map({
+                    basemap: "streets-navigation-vector",
+                    layers: [layer]
                 });
 
                 gMyWebmap = webmap;  // save to global variable
 
                 const view = new MapView({
+                    map: map,
                     container: "mapview",
-                    map: webmap,
-                    zoom: 7
+                    center: [10, 50],
+                    zoom: 4
                 });
 
-                view.when(function () {
-                    view.popup.autoOpenEnabled = true; //disable popups
-                    gWebmapInstantiated = 1; // used in onCustomWidgetAfterUpdate
+                const stateNodes = document.querySelectorAll(`.state-item`);
+                const stateElement = document.getElementById("state-filter");
 
-                    // find the SPL sublayer so a query is issued
-                    applyDefinitionQuery();
+                // click event handler for state choices
+                stateElement.addEventListener("click", filterByState);
+
+                // User clicked on Winter, Spring, Summer or Fall
+                // set an attribute filter on flood warnings layer view
+                // to display the warnings issued in that state
+                function filterByState(event) {
+                    const selectedState = event.target.getAttribute("data-state");
+                        floodLayerView.filter = {
+                            where: "state = '" + selectedState + "'"
+                        };
+                    }
+
+                view.whenLayerView(layer).then((layerView) => {
+                    // flash flood warnings layer loaded
+                    // get a reference to the flood warnings layerview
+                    floodLayerView = layerView;
+
+                    // set up UI items
+                    stateElement.style.visibility = "visible";
+                    const stateExpand = new Expand({
+                        view: view,
+                        content: stateElement,
+                        expandIconClass: "esri-icon-filter",
+                        group: "top-left"
+                    });
+                    //clear the filters when user closes the expand widget
+                    stateExpand.watch("expanded", () => {
+                        if (!stateExpand.expanded) {
+                            floodLayerView.filter = null;
+                        }
+                    });
+                    view.ui.add(stateExpand, "top-left");
+                    view.ui.add("titleDiv", "top-right");
                 });
 
             }); // end of require()
