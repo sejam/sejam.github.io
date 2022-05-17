@@ -122,11 +122,44 @@
                 
                 gMyWebmap = webmap;  // save to global variable
 
-                view.when(function () {
-                    view.popup.autoOpenEnabled = true; //disable popups
-                    gWebmapInstantiated = 1; // used in onCustomWidgetAfterUpdate
-                    
-                });
+                const stateNodes = document.querySelectorAll(`.state-item`);
+        const stateElement = document.getElementById("state-filter");
+
+        // click event handler for state choices
+        stateElement.addEventListener("click", filterByState);
+
+        // User clicked on Winter, Spring, Summer or Fall
+        // set an attribute filter on flood warnings layer view
+        // to display the warnings issued in that state
+        function filterByState(event) {
+          const selectedState = event.target.getAttribute("data-state");
+          ensourceLayerView.filter = {
+            where: "state = '" + selectedState + "'"
+          };
+        }
+
+        view.whenLayerView(layer).then((layerView) => {
+          // flash flood warnings layer loaded
+          // get a reference to the flood warnings layerview
+          ensourceLayerView = layerView;
+
+          // set up UI items
+          stateElement.style.visibility = "visible";
+          const stateExpand = new Expand({
+            view: view,
+            content: stateElement,
+            expandIconClass: "esri-icon-filter",
+            group: "top-left"
+          });
+          //clear the filters when user closes the expand widget
+          stateExpand.watch("expanded", () => {
+            if (!stateExpand.expanded) {
+              ensourceLayerView.filter = null;
+            }
+          });
+          view.ui.add(stateExpand, "top-left");
+          view.ui.add("titleDiv", "top-right");
+        });
 
             }); // end of require()
         } // end of constructor()    
