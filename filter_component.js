@@ -111,6 +111,14 @@
                     zoom: 4
                 });
 
+                const webmap = new WebMap ({
+                    portalItem: {
+                        id: "621801f6f8a44b999dc02633b1ff3f7e"
+                    }
+                });
+
+                gMyWebmap = webmap;  // save to global variable
+                
                 const stateNodes = document.querySelectorAll(`.state-item`);
         const stateElement = document.getElementById("state-filter");
 
