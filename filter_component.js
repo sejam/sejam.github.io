@@ -83,34 +83,7 @@
                 "esri/views/ui/DefaultUI" 
             ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, TimeSlider, Expand, RouteTask, RouteParameters, FeatureSet, Sublayer, Graphic) {
         
-                let ensourceLayerView;
-                
-                // set portal and API Key
-                esriConfig.portalUrl = gPassedPortalURL
-
-                //  set esri api Key 
-                esriConfig.apiKey = gPassedAPIkey
-        
-                // flash flood warnings layer
-                const layer = new FeatureLayer({
-                    portalItem: {
-                        id: "09cc50ad7a8f40b096c6b22052935788"
-                    },
-                    outFields: ["state"]
-                });
-
-                const map = new Map({
-                    basemap: "streets-navigation-vector",
-                    layers: [layer]
-                });
-
-                const view = new MapView({
-                    map: map,
-                    container: "mapview",
-                    center: [10, 50],
-                    zoom: 4
-                });
-
+                              // replace the ID below with the ID to your web map
                 const webmap = new WebMap ({
                     portalItem: {
                         id: "621801f6f8a44b999dc02633b1ff3f7e"
@@ -118,7 +91,14 @@
                 });
 
                 gMyWebmap = webmap;  // save to global variable
-                
+
+                const view = new MapView({
+                    container: "mapview",
+                    map: webmap,
+                    center: [13, 51],
+                    zoom: 8
+                });
+
                 view.when(function () {
                     view.popup.autoOpenEnabled = true; //disable popups
                     gWebmapInstantiated = 1; // used in onCustomWidgetAfterUpdate
@@ -126,45 +106,6 @@
                     // find the SPL sublayer so a query is issued
                     applyDefinitionQuery();
                 });
-                
-                const stateNodes = document.querySelectorAll(`.state-item`);
-        const stateElement = document.getElementById("state-filter");
-
-        // click event handler for state choices
-        stateElement.addEventListener("click", filterByState);
-
-        // User clicked on Winter, Spring, Summer or Fall
-        // set an attribute filter on flood warnings layer view
-        // to display the warnings issued in that state
-        function filterByState(event) {
-          const selectedState = event.target.getAttribute("data-state");
-          ensourceLayerView.filter = {
-            where: "state = '" + selectedState + "'"
-          };
-        }
-
-        view.whenLayerView(layer).then((layerView) => {
-          // flash flood warnings layer loaded
-          // get a reference to the flood warnings layerview
-          ensourceLayerView = layerView;
-
-          // set up UI items
-          stateElement.style.visibility = "visible";
-          const stateExpand = new Expand({
-            view: view,
-            content: stateElement,
-            expandIconClass: "esri-icon-filter",
-            group: "top-left"
-          });
-          //clear the filters when user closes the expand widget
-          stateExpand.watch("expanded", () => {
-            if (!stateExpand.expanded) {
-              ensourceLayerView.filter = null;
-            }
-          });
-          view.ui.add(stateExpand, "top-left");
-          view.ui.add("titleDiv", "top-right");
-        });
 
             }); // end of require()
         } // end of constructor()    
