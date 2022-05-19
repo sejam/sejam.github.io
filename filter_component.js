@@ -4,25 +4,57 @@
     var gPassedPortalURL; //ESRI Portal URL
     var gPassedAPIkey; //ESRI JS api key
     var gWebmapInstantiated = 0; // a global used in applying definition query
-    var gMyLyr; // for sublayer
-    var gMyWebmap; // needs to be global for async call to onCustomWidgetAfterUpdate()
 
     template.innerHTML = `
         <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/light/main.css">
         <style>
+        html,
+        body,
         #mapview {
+            padding: 0;
+            margin: 0;
             width: 100%;
             height: 100%;
         }
-        #timeSlider {
-            position: absolute;
-            left: 5%;
-            right: 15%;
-            bottom: 20px;
+        #state-filter {
+            height: 160px;
+            width: 100%;
+            visibility: hidden;
+        }
+        .state-item {
+            width: 100%;
+            padding: 12px;
+            text-align: center;
+            vertical-align: baseline;
+            cursor: pointer;
+            height: 40px;
+        }
+        .state-item:focus {
+            background-color: dimgrey;
+        }
+        .state-item:hover {
+            background-color: dimgrey;
+        }
+        #titleDiv {
+            padding: 10px;
+        }
+        #titleText {
+            font-size: 20pt;
+            font-weight: 60;
+            padding-bottom: 10px;
         }
         </style>
-        <div id='mapview'></div>
-        <div id='timeSlider'></div>
+        <div id="state-filter" class="esri-widget">
+            <div class="state-item visible-state" data-state="Sachsen">Sachsen</div>
+            <div class="state-item visible-state" data-state="Brandenburg">Brandenburg</div>
+            <div class="state-item visible-state" data-state="Berlin">Berlin</div>
+            <div class="state-item visible-state" data-state="Bayern">Bayern</div>
+        </div>
+        <div id="mapview"></div>
+        <div id="titleDiv" class="esri-widget">
+            <div id="titleText">Energiequellen</div>
+            <div>der Bundesländer</div>
+        </div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
@@ -31,34 +63,11 @@
     // A definition query filters what was first retrieved from the SPL feature service
     function applyDefinitionQuery() {
         var svcLyr = gMyWebmap.findLayerById( '1804b2c4eb4-layer-2' ); 
-        console.log( "Layer is");
-        console.log( svcLyr);
 
         // make layers visible
         svcLyr.visible = true;
-
-        // only execute when the sublayer is loaded. Note this is asynchronous
-        // so it may be skipped over during execution and be executed after exiting this function
-        svcLyr.when(function() {
-            gMyLyr = svcLyr.findSublayerById(6);    // store in global variable
-            console.log("Sublayer loaded...");
-            console.log( "Sublayer is");
-            console.log( gMyLyr);
-
-            // force sublayer visible
-            gMyLyr.visible = true;
-
-            // run the query
-            processDefinitionQuery();
-        });
     };
-
-    // process the definition query on the passed in SPL feature sublayer
-    function processDefinitionQuery()
-    {
-        // values of passedServiceType
-    }
-
+    
     class Map extends HTMLElement {
         constructor() {
             super();
@@ -108,7 +117,7 @@
                 const view = new MapView({
                     container: "mapview",
                     map: webmap,
-                    zoom: 7
+                    zoom: 12
                 });
 
                 view.when(function () {
