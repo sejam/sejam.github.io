@@ -4,6 +4,8 @@
     var gPassedPortalURL; //ESRI Portal URL
     var gPassedAPIkey; //ESRI JS api key
     var gWebmapInstantiated = 0; // a global used in applying definition query
+    var gMyLyr; // for sublayer
+    var gMyWebmap; // needs to be global for async call to onCustomWidgetAfterUpdate()
 
     template.innerHTML = `
         <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/light/main.css">
@@ -12,19 +14,50 @@
             width: 100%;
             height: 100%;
         }
+        #timeSlider {
+            position: absolute;
+            left: 5%;
+            right: 15%;
+            bottom: 20px;
+        }
         </style>
         <div id='mapview'></div>
+        <div id='timeSlider'></div>
     `;
     
+    // this function takes the passed in servicelevel and issues a definition query
+    // to filter service location geometries
+    //
+    // A definition query filters what was first retrieved from the SPL feature service
     function applyDefinitionQuery() {
-        var svcLyr = gMyWebmap.findLayerById( '180b520ff08-layer-3' ); 
+        var svcLyr = gMyWebmap.findLayerById( '1804b2c4eb4-layer-2' ); 
+        console.log( "Layer is");
+        console.log( svcLyr);
 
         // make layers visible
         svcLyr.visible = true;
 
-        // run the query
+        // only execute when the sublayer is loaded. Note this is asynchronous
+        // so it may be skipped over during execution and be executed after exiting this function
+        svcLyr.when(function() {
+            gMyLyr = svcLyr.findSublayerById(6);    // store in global variable
+            console.log("Sublayer loaded...");
+            console.log( "Sublayer is");
+            console.log( gMyLyr);
+
+            // force sublayer visible
+            gMyLyr.visible = true;
+
+            // run the query
             processDefinitionQuery();
+        });
     };
+
+    // process the definition query on the passed in SPL feature sublayer
+    function processDefinitionQuery()
+    {
+        // values of passedServiceType
+    }
 
     class Map extends HTMLElement {
         constructor() {
@@ -52,10 +85,21 @@
                 "esri/views/ui/DefaultUI" 
             ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, TimeSlider, Expand, RouteTask, RouteParameters, FeatureSet, Sublayer, Graphic) {
         
-                              // replace the ID below with the ID to your web map
+                // set portal and API Key
+                esriConfig.portalUrl = gPassedPortalURL
+
+                //  set esri api Key 
+                esriConfig.apiKey = gPassedAPIkey
+        
+                // set routing service
+                var routeTask = new RouteTask({
+                    url: "https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World"
+                });
+        
+                // replace the ID below with the ID to your web map
                 const webmap = new WebMap ({
                     portalItem: {
-                        id: "d0d1305e34ef49bc9888f590758d5128"
+                        id: "6e7e81e4504444b6a62486de1cd8744e"
                     }
                 });
 
@@ -64,8 +108,7 @@
                 const view = new MapView({
                     container: "mapview",
                     map: webmap,
-                    center: [13, 51],
-                    zoom: 8
+                    zoom: 7
                 });
 
                 view.when(function () {
