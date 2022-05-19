@@ -56,6 +56,16 @@
             <div>der Bundesländer</div>
         </div>
     `;
+    
+    function applyDefinitionQuery() {
+        var svcLyr = gMyWebmap.findLayerById( '180b520ff08-layer-3' ); 
+
+        // make layers visible
+        svcLyr.visible = true;
+
+        // run the query
+            processDefinitionQuery();
+    };
 
     class Map extends HTMLElement {
         constructor() {
