@@ -135,8 +135,8 @@
                         id: "d0d1305e34ef49bc9888f590758d5128"
                     }
                 });
-                
-                gMyWebmap = map;  // save to global variable
+
+                gMyWebmap = webmap;  // save to global variable
 
                 const view = new MapView({
                     container: "mapview",
