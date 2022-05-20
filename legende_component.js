@@ -17,7 +17,7 @@
         #legendDiv {
         max-width: 200px;
         //max-height: 390px;
-        max-height: 150px;
+        max-height: 180px;
         font-size: 1em;
         lineHeight: 0;
         opacity: 0.8;
@@ -95,7 +95,7 @@
                 const view = new MapView({
                     container: "mapview",
                     map: webmap,
-                    zoom: 6
+                    zoom: 5
                 });
         
                 view.when(function () {
