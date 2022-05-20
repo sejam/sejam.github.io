@@ -4,6 +4,8 @@
     var gPassedPortalURL; //ESRI Portal URL
     var gPassedAPIkey; //ESRI JS api key
     var gWebmapInstantiated = 0; // a global used in applying definition query
+    var gMyLyr; // for sublayer
+    var gMyWebmap; // needs to be global for async call to onCustomWidgetAfterUpdate()
 
     template.innerHTML = `
         <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/light/main.css">
@@ -23,8 +25,12 @@
         <div id='timeSlider'></div>
     `;
     
+    // this function takes the passed in servicelevel and issues a definition query
+    // to filter service location geometries
+    //
+    // A definition query filters what was first retrieved from the SPL feature service
     function applyDefinitionQuery() {
-        var svcLyr = gMyWebmap.findLayerById( '1804b2c4eb4-layer-2' ); 
+        var svcLyr = gMyWebmap.findLayerById( '180b520ff08-layer-3' ); 
         console.log( "Layer is");
         console.log( svcLyr);
 
@@ -53,7 +59,6 @@
         // values of passedServiceType
     }
 
-    
     class Map extends HTMLElement {
         constructor() {
             super();
@@ -94,7 +99,7 @@
                 // replace the ID below with the ID to your web map
                 const webmap = new WebMap ({
                     portalItem: {
-                        id: "6e7e81e4504444b6a62486de1cd8744e"
+                        id: "d0d1305e34ef49bc9888f590758d5128"
                     }
                 });
 
@@ -103,7 +108,7 @@
                 const view = new MapView({
                     container: "mapview",
                     map: webmap,
-                    zoom: 12
+                    zoom: 7
                 });
 
                 view.when(function () {
