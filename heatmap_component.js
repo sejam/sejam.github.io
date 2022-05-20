@@ -108,7 +108,7 @@
                 const view = new MapView({
                     container: "mapview",
                     map: webmap,
-                    zoom: 5
+                    zoom: 6
                 });
 
                 view.when(function () {
