@@ -11,18 +11,51 @@
         <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/light/main.css">
         <style>
         #mapview {
+            padding: 0;
+            margin: 0;
             width: 100%;
             height: 100%;
         }
-        #timeSlider {
-            position: absolute;
-            left: 5%;
-            right: 15%;
-            bottom: 20px;
+        #state-filter {
+            height: 160px;
+            width: 100%;
+            visibility: hidden;
+        }
+        .state-item {
+            width: 100%;
+            padding: 12px;
+            text-align: center;
+            vertical-align: baseline;
+            cursor: pointer;
+            height: 40px;
+        }
+        .state-item:focus {
+            background-color: dimgrey;
+        }
+        .state-item:hover {
+            background-color: dimgrey;
+        }
+        #titleDiv {
+            padding: 10px;
+        }
+        #titleText {
+            font-size: 20pt;
+            font-weight: 60;
+            padding-bottom: 10px;
         }
         </style>
         <div id='mapview'></div>
         <div id='timeSlider'></div>
+        <div id="state-filter" class="esri-widget">
+            <div class="state-item visible-state" data-state="Sachsen">Sachsen</div>
+            <div class="state-item visible-state" data-state="Brandenburg">Brandenburg</div>
+            <div class="state-item visible-state" data-state="Berlin">Berlin</div>
+            <div class="state-item visible-state" data-state="Bayern">Bayern</div>
+        </div>
+        <div id="titleDiv" class="esri-widget">
+            <div id="titleText">Energiequellen</div>
+            <div>der Bundesländer</div>
+        </div>
     `;
     
     // this function takes the passed in servicelevel and issues a definition query
@@ -108,7 +141,7 @@
                 const view = new MapView({
                     container: "mapview",
                     map: webmap,
-                    zoom: 7
+                    zoom: 12
                 });
 
                 view.when(function () {
