@@ -130,13 +130,13 @@
                 });
         
                 // replace the ID below with the ID to your web map
-                /*const webmap = new WebMap ({
+                const webmap = new WebMap ({
                     portalItem: {
                         id: "d0d1305e34ef49bc9888f590758d5128"
                     }
                 });
 
-                gMyWebmap = webmap;  // save to global variable*/
+                gMyWebmap = webmap;  // save to global variable
 
                 let ensourceLayerView;
                 
