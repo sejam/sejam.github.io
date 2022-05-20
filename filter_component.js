@@ -128,12 +128,21 @@
                 var routeTask = new RouteTask({
                     url: "https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World"
                 });
+                
+                // flash flood warnings layer
+                const layer = new FeatureLayer({
+                    portalItem: {
+                        id: "09cc50ad7a8f40b096c6b22052935788"
+                    },
+                    outFields: ["state"]
+                });
         
                 // replace the ID below with the ID to your web map
                 const webmap = new WebMap ({
                     portalItem: {
                         id: "d0d1305e34ef49bc9888f590758d5128"
-                    }
+                    },
+                    layers: [layer]
                 });
 
                 gMyWebmap = webmap;  // save to global variable
